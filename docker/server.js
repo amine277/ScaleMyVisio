@@ -9,7 +9,7 @@ const PORT = 8080;
 var server = http.createServer(function (request, response) {
 
     if (request.url === "/") {
-        fs.readFile("index.html", function (error, pgResp) {
+        fs.readFile("src/index.html", function (error, pgResp) {
             if (error) {
                 response.writeHead(404);
                 response.write('Page is not found');
@@ -30,4 +30,5 @@ var server = http.createServer(function (request, response) {
 
 server.listen(PORT);
 
-console.log(`Running on http://localhost:${PORT}`);
+console.log(`Nodejs Running on http://localhost:3000`);
+console.log(`PHPMyAdmin Running on http://localhost:3001`);
