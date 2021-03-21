@@ -56,7 +56,7 @@ module.exports = {
        listenIps: [
           {
             ip: '0.0.0.0',      
-            announcedIp:'68.183.254.180' // replace by public IP address
+            announcedIp:'188.166.173.170' // replace by public IP address
           }
         ],
       enableUdp: true,
