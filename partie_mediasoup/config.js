@@ -53,7 +53,7 @@ module.exports = {
     webRtcTransport: {
       listenIps: [
         {   ip: '0.0.0.0',      
-            announcedIp:'178.62.10.182' // replace by public IP address}
+            announcedIp:'68.183.254.180' // replace by public IP address}
       ],
       enableUdp: true,
       enableTcp: true,
