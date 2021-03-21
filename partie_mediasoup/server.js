@@ -5,12 +5,23 @@ const mediasoup = require('mediasoup');
 const port = config.server.port;*/
 
 const express = require('express')
-const app = express()
-const server = require('http').Server(app)
+const app = express();
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+
+//const server = require('http').Server(app)
+const server = https.createServer(options, app);
+
 const io = require('socket.io')(server)
 const config = require('./config');
 const mediasoup = require('mediasoup');
-const port = config.server.port;
+const port = process.env.PORT || config.server.port;
 
 app.use(express.static('public'));
 

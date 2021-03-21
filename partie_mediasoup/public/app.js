@@ -43,13 +43,18 @@ room.join(peerName)
       // Show local stream
       const localStream = new MediaStream([videoTrack, audioTrack]);
       const bloc = document.createElement('div');
-      bloc.className = "videoBloc"
+      bloc.className = "videoBloc";
       const video = document.createElement('video');
       
-      video.setAttribute('autoplay', 'true');
+     // video.setAttribute('autoplay', 'true');
       video.srcObject = stream;
       video.muted=true;
+      video.autoplay = true;
+      video.playsInline = true;
+
       video.setAttribute('autoplay', 'true');
+      video.setAttribute('muted', 'true');
+      video.setAttribute('playsInline', 'true');
       bloc.appendChild(video);
       const start = document.createElement('button');
       start.id = 'videoButton';
@@ -154,8 +159,15 @@ function handleConsumer(consumer) {
         
         
         video.srcObject = stream;
+        //video.muted=true;
         video.muted=true;
+        video.autoplay = true;
+        video.playsInline = true;
         video.setAttribute('autoplay', 'true');
+        video.setAttribute('muted', 'true');
+        video.setAttribute('playsInline', 'true');
+
+
         bloc.appendChild(video);
         const start = document.createElement('button');
         start.id = 'videoButton';
@@ -172,12 +184,12 @@ function handleConsumer(consumer) {
       }
       
       // Audio append
-      /*if (consumer.kind === 'audio') {
+      if (consumer.kind === 'audio') {
         const audio = document.createElement('audio');
         audio.srcObject = stream;
         document.getElementById('container').appendChild(audio);
         audio.play();
-      }*/
+      }
     });
 
   // Event fired when the Consumer is closed.

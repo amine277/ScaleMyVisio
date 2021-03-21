@@ -35,9 +35,13 @@ module.exports = {
       {
         kind: 'video',
         name: 'VP8',
-        clockRate: 90000
-      },
-      /*{
+        clockRate: 90000,
+        parameters:
+          {
+            'x-google-start-bitrate': 1000
+          }
+      }, 
+     /* {
         kind: 'video',
         name: 'H264',
         clockRate: 90000,
@@ -46,6 +50,17 @@ module.exports = {
         }
       }*/
     ],
+    webRtcTransport: {
+      listenIps: [
+        { ip: '10.217.7.40', announcedIp: null }
+      ],
+      enableUdp: true,
+      enableTcp: true,
+      preferUdp: true,
+      preferTcp: true,
+      maxIncomingBitrate: 1500000,
+      initialAvailableOutgoingBitrate: 1000000,
+    },
     // mediasoup per Peer max sending bitrate (in bps).
     maxBitrate: 500000
   }
