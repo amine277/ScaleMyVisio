@@ -420,36 +420,21 @@ class RoomClient {
             this.consumers.set(consumer.id, consumer)
 
             let elem;
-            let muteVideo;
-            let muteAudio;
             if (kind === 'video') {
                 elem = document.createElement('video')
-                var butSection = document.createElement('div')
-                muteVideo = document.createElement('BUTTON')
-                muteVideo.innerHTML = "Hide video"; 
-
                 elem.srcObject = stream
                 elem.id = consumer.id
                 elem.playsinline = false
                 elem.autoplay = true
                 elem.className = "vid"
                 this.remoteVideoEl.appendChild(elem)
-                butSection.appendChild(muteVideo)
-                //this.remoteVideoEl.appendChild(butSection)
-
-
             } else {
                 elem = document.createElement('audio')
-                muteAudio = document.createElement('BUTTON')
-                muteAudio.innerHTML = "Mute";
-                muteAudio.onclick= muteconsumer(elem,muteAudio);
                 elem.srcObject = stream
                 elem.id = consumer.id
                 elem.playsinline = false
                 elem.autoplay = true
-                elem.muted=false
-                this.remoteAudioEl.appendChild(elem)           
-                this.remoteVideoEl.appendChild(muteAudio)
+                this.remoteAudioEl.appendChild(elem)
             }
 
             consumer.on('trackended', function () {
@@ -463,8 +448,6 @@ class RoomClient {
 
         }.bind(this))
     }
-    
-
 
 
     async getConsumeStream(producerId) {
