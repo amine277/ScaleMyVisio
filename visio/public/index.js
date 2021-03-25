@@ -39,7 +39,7 @@ function roomOpen() {
   hide(stopAudioButton)
   reveal(startVideoButton)
   hide(stopVideoButton)
-  reveal(startScreenButton)
+  hide(startScreenButton)
   hide(stopScreenButton)
   reveal(exitButton)
   control.className = ''
