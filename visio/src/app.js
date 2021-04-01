@@ -216,6 +216,12 @@ io.on('connection', socket => {
         console.log(`---producer close--- name: ${roomList.get(socket.room_id) && roomList.get(socket.room_id).getPeers().get(socket.id).name}`)
         roomList.get(socket.room_id).closeProducer(socket.id, producer_id)
     })
+    
+   socket.on('chatMsg',(msg) => {
+        console.log("message recu");
+        console.log(msg);
+        socket.emit('addChat',msg);
+    })
 
     socket.on('exitRoom', async (_, callback) => {
         console.log(`---exit room--- name: ${roomList.get(socket.room_id) && roomList.get(socket.room_id).getPeers().get(socket.id).name}`)
