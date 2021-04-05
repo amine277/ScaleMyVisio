@@ -81,6 +81,7 @@ class RoomClient {
         }.bind(this)).catch(e => {
             console.log(e)
         })
+        
     }
 
     async loadDevice(routerRtpCapabilities) {
@@ -300,10 +301,11 @@ class RoomClient {
                 return
                 break;
         }
-        if (!this.device.canProduce('video') && !audio) {
+        
+        /*if (!this.device.canProduce('video') && !audio) {
             console.error('cannot produce video');
             return;
-        }
+        }*/
         if (this.producerLabel.has(type)) {
             console.log('producer already exists for this type ' + type)
             return

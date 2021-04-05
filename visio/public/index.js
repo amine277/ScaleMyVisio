@@ -22,7 +22,7 @@ socket.request = function request(type, data = {}) {
 
 let rc = null
 
-function joinRoom(name, room_id) {
+async function joinRoom(name, room_id) {
   if (rc && rc.isOpen()) {
     console.log('already connected to a room')
   } else {
@@ -31,6 +31,11 @@ function joinRoom(name, room_id) {
     addListeners()
   }
 
+}
+
+function start_stream(){
+  document.getElementById('startVideoButton').onclick();
+  document.getElementById('startAudioButton').onclick();
 }
 
 function roomOpen() {
