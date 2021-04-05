@@ -38,21 +38,75 @@
         <p>Welcome to ScaleMyVisio WebConference</p>
     </nav>
     
+    <!--                HOME SECITION                               -->
+    
+    <div id="home">
+        <h1>Login</h1>
+        <div class="textbox">
+           <i class="fas fa-at"></i>
+           <input id="homeEmailInput" value="" type="text" placeholder="Email" />
+        </div>
+        <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
+        <div class="textbox">
+            <i class="fas fa-lock"></i>
+            <input id='passwordInput' value="" type="password" placeholder="Password" />
+            <span class="eye" onclick="passwordHide()">
+                <i id="hide1" class="fa fa-eye"></i>
+                <i id="hide2" class="fa fa-eye-slash"></i>
+            </span>
+        </div>
+        <div>
+            <button id='homeButton' onclick="home_login()">Login</button>
+        </div>
+        <div id="noAccount" onclick="home_register">
+            <p>No account ? <span onclick="home_register()"> Register</span>  </p>
+        </div>
+    </div>
+    
+    <!--                REGISTER SECTION                            -->
+    
+    <div id="register" class="hidden">
+        <h1>Sign up</h1>
+        <div class="textbox">
+           <i class="fas fa-at"></i>
+           <input id="registerEmailInput" value="" type="text" placeholder="Email" />
+        </div>
+        <div class="textbox">
+           <i class="fas fa-user-alt"></i>
+           <input id="PseudoInput" value="" type="text" placeholder="Pseudo" />
+        </div>
+        <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
+        <div class="textbox">
+            <i class="fas fa-lock"></i>
+            <input id='passwordInput' value="" type="password" placeholder="Password"/>
+            <span class="eye" onclick="passwordHide()">
+                <i id="hide1" class="fa fa-eye"></i>
+                <i id="hide2" class="fa fa-eye-slash"></i>
+            </span>
+        </div>
+        <div class="textbox">
+            <input id='registerNameInput' value="" type="password" placeholder="Type Password again" />
+        </div>
+        <div>
+            <button id='loginButton' onclick="home_register()">Submit</button>
+        </div>
+    </div>
+    
     <!--                LOGIN SECTION                               -->
-    <div id="login">
+    <div id="login" class="hidden" >
         <h1>Login</h1>
         <div class="textbox">
            <i class="fas fa-search-location"></i>
            <input id="roomidInput" value="" type="text" placeholder="Room" />
         </div>
         <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
-        <div class="textbox">
+    <div class="textbox">
             <i class="fas fa-user"></i>
             <input id='nameInput' value="" type="text" placeholder="UserName" />
         </div>
         <div id="startButtons">
             <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Room</button>
-            <button id='createButton'>Create Room</button>
+            <button id='createButton' onclick="joinRoom(nameInput.value, roomidInput.value);adminInterface()">Create Room</button>
         </div>
     </div>
     
@@ -90,8 +144,11 @@
                 </div>
             </div>
             <div id="buttons_deco">
-                <div>
+                <div id="passageVisioStreaming">
                     <i class="fab fa-twitch"></i><p>Go Streaming</p>
+                </div>
+                <div id="controlePassage" class='hidden'>
+                    <i class="fas fa-user-check" onclick="ParticipantControlHide()"></i><p>Control</p>
                 </div>
                 <div>
                     <i class="fas fa-users" onclick="ParticipantHide()"></i><p>Participant</p>
@@ -127,7 +184,11 @@
         <!--<h2 style="color:white">local</h2>-->
         <div id="FirstVideoDiv">
             <div id="localMedia"></div>
-            <div id="Participant"><p>Participant</p>
+            <div id="ParticipantControl"><p>Control</p>
+                <ul id="ParticipantControlList">
+                </ul>
+            </div>
+            <div id="Participant"><p>Participants</p>
                 <ul id="ParticipantList">
                 </ul>
             </div>
@@ -138,8 +199,9 @@
         <div id="remoteVideos" class="container"></div>
 
         <div id="remoteAudios"></div>
-
     </div>
+    
+    
     <script type="text/javascript" src="frontScript.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
