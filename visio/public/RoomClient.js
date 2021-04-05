@@ -16,7 +16,7 @@ const _EVENTS = {
 
 class RoomClient {
 
-    constructor(localMediaEl, remoteVideoEl, remoteAudioEl, mediasoupClient, socket, room_id, name, successCallback) {
+    constructor(localMediaEl, remoteVideoEl, remoteAudioEl, mediasoupClient, socket, room_id, name, successCallback,localParticipant) {
         this.name = name
         this.localMediaEl = localMediaEl
         this.remoteVideoEl = remoteVideoEl
@@ -31,6 +31,8 @@ class RoomClient {
 
         this.consumers = new Map()
         this.producers = new Map()
+        
+        this.localParticipant = localParticipant
 
         /**
          * map that contains a mediatype as key and producer_id as value
@@ -50,6 +52,11 @@ class RoomClient {
             this._isOpen = true
             successCallback()
         }.bind(this))
+        // Ajout des noms dans participants
+/*        let fen = document.getElementById('ParticipantList');*/
+        let part = document.createElement('li');
+        part.innerText = this.name;
+        this.localParticipant.appendChild(part)
 
 
 
@@ -234,6 +241,13 @@ class RoomClient {
                 await this.consume(producer_id)
             }
         }.bind(this))
+        
+        this.socket.on('addChat',(val) => {
+            let conteneur = document.getElementById('conteneurMessage');
+            let message = document.createElement('li');
+            message.innerText = this.name + ": " + val;
+            conteneur.appendChild(message);
+        })
 
         this.socket.on('disconnect', function () {
             this.exit(true)
@@ -596,6 +610,13 @@ class RoomClient {
     on(evt, callback) {
         this.eventListeners.get(evt).push(callback)
     }
+    
+    sendChat(val){
+        console.log("Send Chat");
+        console.log(val);
+        this.socket.emit('chatMsg',val);
+    };
+
 
 
 
