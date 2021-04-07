@@ -19,6 +19,22 @@ function adminInterface(){
     passageVisioStreaming.className = 'hidden';
     controlePassage.className = '';
 }
+
+function login_streaming(){
+    login.className = 'hidden';
+    streamingSection.className = ''; 
+}
+
+function streaming_visio(){
+    if (streamingSection.className === "hidden"){
+        control.className = 'hidden';
+        streamingSection.className = '';
+    }
+    else if (control.className === "hidden"){
+        streamingSection.className = '';
+        control.className = '';
+    }
+}
     
 /*                          Design bouttons                         */
 function ParticipantHide(){
@@ -66,8 +82,25 @@ function ChatHide(){
 
 function homePasswordHide(){
     var x = document.getElementById("homePasswordInput");
-    var y = document.getElementById("hide1");
-    var z = document.getElementById("hide2");
+    var y = document.getElementById("homeHide1");
+    var z = document.getElementById("homeHide2");
+    
+    if (x.type === 'password'){
+        x.type = "text";
+        y.style.display = "block";
+        z.style.display = "none";
+    }
+    else {
+        x.type = "password";
+        y.style.display = "none";
+        z.style.display = "block"; 
+    }
+}
+
+function registerPasswordHide(){
+    var x = document.getElementById("registerPasswordInput");
+    var y = document.getElementById("registerHide1");
+    var z = document.getElementById("registerHide2");
     
     if (x.type === 'password'){
         x.type = "text";

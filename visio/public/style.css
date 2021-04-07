@@ -29,14 +29,21 @@ nav p {
 
 /*                                  LOGIN SECTION                               */
 
+/*#centerLogin {
+    display: flex;
+    height: 72%;
+    justify-content: center;
+    align-items: center;
+}*/
 
 #login {
     width: 280px;
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%,-50%);
     color: white;
+    text-align: center;
 }
 
 #login h1 {
@@ -47,7 +54,7 @@ nav p {
 }
 
 .textbox{
-    width: 100%;
+    width: 280px;
     overflow: hidden;
     padding: 8px 0;
     margin: 8px 0;
@@ -72,12 +79,18 @@ nav p {
 }
 
 #startButtons {
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    width: 430px;
 }
 
-#login button {
-    width: 50%;
+#startButtons button {
+    width: 30%;
     background: none;
     border: 2px solid #4caf50;
     color: white;

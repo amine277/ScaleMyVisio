@@ -49,10 +49,10 @@
         <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
         <div class="textbox">
             <i class="fas fa-lock"></i>
-            <input id='passwordInput' value="" type="password" placeholder="Password" />
-            <span class="eye" onclick="passwordHide()">
-                <i id="hide1" class="fa fa-eye"></i>
-                <i id="hide2" class="fa fa-eye-slash"></i>
+            <input id='homePasswordInput' value="" type="password" placeholder="Password" />
+            <span class="eye" onclick="homePasswordHide()">
+                <i id="homeHide1" class="fa fa-eye"></i>
+                <i id="homeHide2" class="fa fa-eye-slash"></i>
             </span>
         </div>
         <div>
@@ -78,10 +78,10 @@
         <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
         <div class="textbox">
             <i class="fas fa-lock"></i>
-            <input id='passwordInput' value="" type="password" placeholder="Password"/>
-            <span class="eye" onclick="passwordHide()">
-                <i id="hide1" class="fa fa-eye"></i>
-                <i id="hide2" class="fa fa-eye-slash"></i>
+            <input id='registerPasswordInput' value="" type="password" placeholder="Password"/>
+            <span class="eye" onclick="registerPasswordHide()">
+                <i id="registerHide1" class="fa fa-eye"></i>
+                <i id="registerHide2" class="fa fa-eye-slash"></i>
             </span>
         </div>
         <div class="textbox">
@@ -93,22 +93,30 @@
     </div>
     
     <!--                LOGIN SECTION                               -->
-    <div id="login" class="hidden" >
-        <h1>Login</h1>
-        <div class="textbox">
-           <i class="fas fa-search-location"></i>
-           <input id="roomidInput" value="" type="text" placeholder="Room" />
+    <!--<div id="centerLogin" class="hidden">-->
+        <div id="login" class="hidden">
+            <h1>Begin</h1>
+            <div class="textbox">
+                <i class="fas fa-search-location"></i>
+                <input id="roomidInput" value="" type="text" placeholder="Room" />
+            </div>
+            <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
+            <div class="textbox">
+                <i class="fas fa-user"></i>
+                <input id='nameInput' value="" type="text" placeholder="UserName" />
+            </div>
+            <div id="startButtons">
+                <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
+                <button id='joinStreaming' onclick="login_streaming()">Join Streaming</button>
+                <button id='createButton' onclick="joinRoom(nameInput.value, roomidInput.value);adminInterface()">Create Room</button>
+            </div>
         </div>
-        <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
-    <div class="textbox">
-            <i class="fas fa-user"></i>
-            <input id='nameInput' value="" type="text" placeholder="UserName" />
-        </div>
-        <!--<button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value); start_stream();">Join</button>-->
-        <div id="startButtons">
-            <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Room</button>
-            <button id='createButton' onclick="joinRoom(nameInput.value, roomidInput.value);adminInterface()">Create Room</button>
-        </div>
+    <!--</div>
+    
+    <!--                Streaming SECTION                           -->
+    
+    <div id="streamingSection" class="hidden">
+            
     </div>
     
     <!--                WEB CONFERENCE SECTION                      -->
@@ -145,7 +153,7 @@
                 </div>
             </div>
             <div id="buttons_deco">
-                <div id="passageVisioStreaming">
+                <div id="passageVisioStreaming" onclick="streaming_visio()">
                     <i class="fab fa-twitch"></i><p>Go Streaming</p>
                 </div>
                 <div id="controlePassage" class='hidden'>
