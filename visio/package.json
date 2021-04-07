@@ -12,8 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.17.1",
     "httpolyglot": "^0.1.2",
+    "lodash": "^4.17.4",
     "mediasoup": "^3.6.16",
     "mediasoup-client": "^3.6.12",
     "protoo-client": "^4.0.4",

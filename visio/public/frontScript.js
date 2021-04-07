@@ -25,6 +25,7 @@ function login_streaming(){
     streamingSection.className = ''; 
 }
 
+
 function streaming_visio(){
     if (streamingSection.className === "hidden"){
         control.className = 'hidden';

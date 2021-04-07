@@ -6,8 +6,13 @@ const fs = require('fs')
 const mediasoup = require('mediasoup')
 const config = require('./config')
 const path = require('path')
+const bodyParser = require('body-parser');
+const {routers} = require('./router')
 const Room = require('./Room')
 const Peer = require('./Peer')
+const _ = require('lodash');
+const cors = require('cors');
+
 
 const options = {
     key: fs.readFileSync(path.join(__dirname,config.sslKey), 'utf-8'),
@@ -18,6 +23,14 @@ const httpsServer = https.createServer(options, app)
 const io = require('socket.io')(httpsServer)
 
 app.use(express.static(path.join(__dirname, '..', 'public')))
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(cors({exposedHeaders: '*'}));
+
+
+app.routers = routers(app);
 
 httpsServer.listen(config.listenPort, () => {
     console.log('listening https ' + config.listenPort)

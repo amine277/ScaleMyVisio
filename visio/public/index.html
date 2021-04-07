@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    
+    <link href="https://vjs.zencdn.net/7.5.5/video-js.css" rel="stylesheet">
+		<script src="https://vjs.zencdn.net/7.5.5/video.js"></script>
     <style>
         .settings {
             background-color: #4CAF50;
@@ -115,7 +116,15 @@
     
     <!--                Streaming SECTION                           -->
     
-    <div id="streamingSection" class="hidden">
+    <div id="streamingSection" class="hidden" >
+
+        <h1>HLS Player</h1>
+		<video id="player" class="video-js vjs-default-skin" width="720" controls preload="auto">
+			<source src= "http://localhost:3002/live/tabvn/index.m3u8" type="application/x-mpegURL" />
+		</video>
+		<script>
+			var player = videojs('#player');
+		</script>
             
     </div>
     
