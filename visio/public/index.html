@@ -38,79 +38,82 @@
         <p>Welcome to ScaleMyVisio WebConference</p>
     </nav>
     
-    <!--                HOME SECITION                               -->
-    
-    <div id="home">
-        <h1>Login</h1>
-        <div class="textbox">
-           <i class="fas fa-at"></i>
-           <input id="homeEmailInput" value="" type="text" placeholder="Email" />
+    <!--                HOME SECTION                               -->
+    <form action="/login" method="post">
+        <div id="home">
+            <h1>Login</h1>
+            <div class="textbox">
+            <i class="fas fa-at"></i>
+            <input id="homeEmailInput" name="email" value="" type="text" placeholder="Email" />
+            </div>
+            <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
+            <div class="textbox">
+                <i class="fas fa-lock"></i>
+                <input id='passwordInput' name ="password" value="" type="password" placeholder="Password" />
+                <span class="eye" onclick="passwordHide()">
+                    <i id="hide1" class="fa fa-eye"></i>
+                    <i id="hide2" class="fa fa-eye-slash"></i>
+                </span>
+            </div>
+            <div>
+                <button id='homeButton' onclick="home_login()">Login</button>
+            </div>
+            <div id="noAccount" onclick="home_register">
+                <p>No account ? <span onclick="home_register()"> Register</span>  </p>
+            </div>
         </div>
-        <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
-        <div class="textbox">
-            <i class="fas fa-lock"></i>
-            <input id='passwordInput' value="" type="password" placeholder="Password" />
-            <span class="eye" onclick="passwordHide()">
-                <i id="hide1" class="fa fa-eye"></i>
-                <i id="hide2" class="fa fa-eye-slash"></i>
-            </span>
-        </div>
-        <div>
-            <button id='homeButton' onclick="home_login()">Login</button>
-        </div>
-        <div id="noAccount" onclick="home_register">
-            <p>No account ? <span onclick="home_register()"> Register</span>  </p>
-        </div>
-    </div>
-    
+    </form>
+
     <!--                REGISTER SECTION                            -->
-    
-    <div id="register" class="hidden">
-        <h1>Sign up</h1>
-        <div class="textbox">
-           <i class="fas fa-at"></i>
-           <input id="registerEmailInput" value="" type="text" placeholder="Email" />
+    <form action="/register" method="post">
+        <div id="register" class="hidden">
+            <h1>Sign up</h1>
+            <div class="textbox">
+            <i class="fas fa-at"></i>
+            <input name="email" id="email" value="" type="text" placeholder="Email" />
+            </div>
+            <div class="textbox">
+            <i class="fas fa-user-alt"></i>
+            <input name="name" id="name" value="" type="text" placeholder="Pseudo" />
+            </div>
+            <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
+            <div class="textbox">
+                <i class="fas fa-lock"></i>
+                <input name="password" id='password' value="" type="password" placeholder="Password"/>
+                <span class="eye" onclick="passwordHide()">
+                    <i id="hide1" class="fa fa-eye"></i>
+                    <i id="hide2" class="fa fa-eye-slash"></i>
+                </span>
+            </div>
+            <div class="textbox">
+                <input id='registerNameInput' value="" type="password" placeholder="Type Password again" />
+            </div>
+            <div>
+                <button id='loginButton' type="submit">Submit</button>
+            </div>
         </div>
-        <div class="textbox">
-           <i class="fas fa-user-alt"></i>
-           <input id="PseudoInput" value="" type="text" placeholder="Pseudo" />
-        </div>
-        <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
-        <div class="textbox">
-            <i class="fas fa-lock"></i>
-            <input id='passwordInput' value="" type="password" placeholder="Password"/>
-            <span class="eye" onclick="passwordHide()">
-                <i id="hide1" class="fa fa-eye"></i>
-                <i id="hide2" class="fa fa-eye-slash"></i>
-            </span>
-        </div>
-        <div class="textbox">
-            <input id='registerNameInput' value="" type="password" placeholder="Type Password again" />
-        </div>
-        <div>
-            <button id='loginButton' onclick="home_register()">Submit</button>
-        </div>
-    </div>
-    
+    </form>
+
     <!--                LOGIN SECTION                               -->
-    <div id="login" class="hidden" >
-        <h1>Login</h1>
+
+        <div id="login" class="hidden" >
+            <h1>Login</h1>
+            <div class="textbox">
+            <i class="fas fa-search-location"></i>
+            <input id="roomidInput" value="" type="text" placeholder="Room" />
+            </div>
+            <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
         <div class="textbox">
-           <i class="fas fa-search-location"></i>
-           <input id="roomidInput" value="" type="text" placeholder="Room" />
+                <i class="fas fa-user"></i>
+                <input id='nameInput' value="" type="text" placeholder="UserName" />
+            </div>
+            <!--<button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value); start_stream();">Join</button>-->
+            <div id="startButtons">
+                <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Room</button>
+                <button id='createButton' onclick="joinRoom(nameInput.value, roomidInput.value);adminInterface()">Create Room</button>
+            </div>
         </div>
-        <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
-    <div class="textbox">
-            <i class="fas fa-user"></i>
-            <input id='nameInput' value="" type="text" placeholder="UserName" />
-        </div>
-        <!--<button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value); start_stream();">Join</button>-->
-        <div id="startButtons">
-            <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Room</button>
-            <button id='createButton' onclick="joinRoom(nameInput.value, roomidInput.value);adminInterface()">Create Room</button>
-        </div>
-    </div>
-    
+
     <!--                WEB CONFERENCE SECTION                      -->
     <div id="control" class="hidden">
         <!--<div id='exitButton' class='hidden' onclick="rc.exit()">

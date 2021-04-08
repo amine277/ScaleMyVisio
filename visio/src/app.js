@@ -4,11 +4,21 @@ const app = express()
 const https = require('httpolyglot')
 const fs = require('fs')
 const mediasoup = require('mediasoup')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+
+//Import Routes
+
 const config = require('./config')
 const path = require('path')
 const Room = require('./Room')
 const Peer = require('./Peer')
+const authRoute = require('../routes/auth');
 
+dotenv.config();
+
+//ssl
 const options = {
     key: fs.readFileSync(path.join(__dirname,config.sslKey), 'utf-8'),
     cert: fs.readFileSync(path.join(__dirname,config.sslCrt), 'utf-8')
@@ -23,7 +33,18 @@ httpsServer.listen(config.listenPort, () => {
     console.log('listening https ' + config.listenPort)
 })
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
+//Connnection to Database
+mongoose.connect(process.env.DB_URL,
+{ useUnifiedTopology: true },
+() => console.log('Connected to DB!')
+);
+
+//Middleware
+app.use('/',authRoute);
+app.use(express.json());
 
 // all mediasoup workers
 let workers = []
