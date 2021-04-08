@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const {registerValidation,loginValidation} = require('../routes/validation');
 const { exist } = require('@hapi/joi');
 
+
 router.post('/register',  async (req,res)=>{
     // Validate data
     const {error} = registerValidation(req.body);
@@ -54,8 +55,7 @@ router.post('/login', async (req,res) => {
     // Create and assign Token 
     const token = jwt.sign({_id: user._id},process.env.Secret_Token);
     //res.header('auth-token',token).send(token);
-
-    res.send('Logged in !');
+    //home_register()    //res.send('Logged in !');
 });
 
 
