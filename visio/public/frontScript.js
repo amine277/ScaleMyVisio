@@ -21,8 +21,14 @@ function adminInterface(){
 }
 
 function login_streaming(){
-    login.className = 'hidden';
-    streamingSection.className = ''; 
+    if (streamingSection.className === "hidden"){
+        login.className = 'hidden';
+        streamingSection.className = ''; 
+    }
+    else if (login.className === "hidden"){
+        login.className = '';
+        streamingSection.className = 'hidden';
+    }
 }
 
 
@@ -35,6 +41,10 @@ function streaming_visio(){
         streamingSection.className = '';
         control.className = '';
     }
+}             // Transition Streaming->Visio BUG
+
+function goVisio(){
+    streamingSection.style.display = 'none';
 }
     
 /*                          Design bouttons                         */
@@ -114,6 +124,32 @@ function registerPasswordHide(){
         z.style.display = "block"; 
     }
 }
+
+function participantStreamingHide(){
+    var x = document.getElementById("ParticipantsStreaming");
+    if (x.className === 'hidden'){
+        x.className = '';
+    }
+    else {
+        x.className = 'hidden';
+    }
+}
+
+function chatStreamingHide(){
+    var x = document.getElementById("ChatStreaming");
+    if (x.className === 'hidden'){
+        x.className = '';
+    }
+    else {
+        x.className = 'hidden';
+    }
+}
+
+/*function exitStreaming() {                              // Faudrait penser à supprimer le flux aussi
+    var x = document.getElementById("streamingSection");
+    var y = document.getElementById("login");
+    x.className
+}   */                      
 
 /*                          Fonction servant au chat                */
 $('html').keydown((e) =>{

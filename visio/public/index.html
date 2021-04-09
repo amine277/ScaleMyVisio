@@ -119,17 +119,58 @@
     <!--                Streaming SECTION                           -->
     
     <div id="streamingSection" class="hidden" >
-
-        <h1>HLS Player</h1>
-		<video id="player" class="video-js vjs-default-skin" width="720" controls preload="auto">
-			<source src= "http://localhost:3002/live/tabvn/index.m3u8" type="application/x-mpegURL" />
-		</video>
-		<script>
-			var player = videojs('#player');
-		</script>
+        <div id="StreamDiv">
+            <div id="videoStreming">
+		        <video id="player" class="video-js vjs-default-skin" width="720" controls preload="auto">
+		    	    <source src= "http://localhost:3002/live/tabvn/index.m3u8" type="application/x-mpegURL" />
+		        </video>
+		        <script>
+		    	    var player = videojs('#player');
+		        </script>
+            </div>
             
+            <div id="ParticipantsStreaming" class="hidden">
+                <div class="chat_header">
+                    <p>Participants</p>
+                </div>
+            </div>
+        
+            <div id="ChatStreaming" class="hidden">
+                <div class="chat_header">
+                    <p>Chat</p>
+                    <ul id="conteneurMessage"></ul>
+                </div>
+                <!--<form action="" id="chatForm" onsubmit="rc.sendChat();return false"> 
+                onclick="joinRoom(nameInput.value, roomidInput.value)"-->
+                <div id="chat_message">
+                    <input id="chat_input" type="text" placeholder="Type message here"/>
+                </div>
+            </div>
+            
+        </div>
+        <div id="StreamingButtons">
+            <div class="buttons_main">
+                <div id="passageStreamingVisio">
+                    <i class="fas fa-video"></i><p>Go Visio</p>
+                </div>
+            </div>
+            <div class="buttons_deco">
+                <div>
+                    <i class="fas fa-users" onclick="participantStreamingHide()"></i><p>Participants</p>
+                </div>
+                <div>
+                    <i class="fas fa-comment-alt" onclick="chatStreamingHide()"></i><p>Chat</p>
+                </div>
+            </div>
+            <div>
+                <div class="buttons_exit">
+                    <div>
+                        <i class="fas fa-door-open" onclick="login_streaming()"></i><p>Exit</p>
+                    </div>
+                </div>
+            </div>   
+        </div>
     </div>
-    
     <!--                WEB CONFERENCE SECTION                      -->
     <div id="control" class="hidden">
         <!--<div id='exitButton' class='hidden' onclick="rc.exit()">
@@ -143,7 +184,7 @@
         </select>
         <!--<br />-->
         <div id="buttons">
-            <div id="buttons_main">
+            <div class="buttons_main">
                 <div id='startAudioButton' class='hidden' onclick="rc.produce(RoomClient.mediaType.audio, audioSelect.value)">
                     <i class="fas fa-microphone"></i><p>Audio</p>
                 </div>
@@ -163,7 +204,7 @@
                     <i class="fas fa-desktop"></i><p>Stop Sharing</p>
                 </div>
             </div>
-            <div id="buttons_deco">
+            <div class="buttons_deco">
                 <div id="passageVisioStreaming" onclick="streaming_visio()">
                     <i class="fab fa-twitch"></i><p>Go Streaming</p>
                 </div>
@@ -185,7 +226,7 @@
         </div>
         <!--<br />-->
         <div id="chat">
-             <div id="chat_header">
+             <div class="chat_header">
                <p>Chat</p>
                <ul id="conteneurMessage">
                    

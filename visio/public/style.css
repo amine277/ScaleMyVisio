@@ -212,15 +212,15 @@ nav p {
     font-size: 15px;
 }
 
-#buttons_main {
+.buttons_main {
     display: flex;
     flex-direction: row;
 }
-#buttons_deco {
+.buttons_deco {
     display: flex;
     flex-direction: row;
 }
-#buttons_exit {
+.buttons_exit {
     display: flex;
     flex-direction: row;
 }
@@ -235,7 +235,7 @@ nav p {
     float: right;
 }
 
-#chat_header p {
+.chat_header p {
     color: white;
     text-align: center;
     font-family: 'Poppins', sans-serif;
@@ -347,4 +347,73 @@ video {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/*                      Streaming Section                                   */
+
+#streamingSection {
+    height: 92%;
+    width: 100%;
+}
+
+#streamingSection i {
+    color: white;
+    font-size: 30px;
+}
+
+#StreamDiv {
+    height: 100%;
+    display: flex;
+}
+
+#videoStreming {
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+#ChatStreaming{
+    top:0;
+    width: 20%;
+    height: 100%;
+    float: right;
+    background-color: #343434;
+}
+
+#ParticipantsStreaming {
+    height: 35%;
+    width: 15%;
+    background-color: #343434;
+    margin: 0 10px;
+    
+}
+
+#StreamingButtons {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#StreamingButtons div {
+    margin: 0 15px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    font-size: 15px;
+}
+
+#StreamingButtons_main {
+    display: flex;
+    flex-direction: row;
+}
+
+#conteneurMessageStreaming li {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
 }
