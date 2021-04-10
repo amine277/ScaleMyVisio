@@ -74,19 +74,18 @@ function ChatHide(){
     var x = document.getElementById("chat");
     var y = document.getElementById("buttons");
     var z0 = document.getElementById("videoMedia");
-    var z1 = document.getElementById("localMedia");
     var z2 = document.getElementById("remoteVideos");
     
     if (x.style.display === 'none'){
         x.style.display = "block";
         y.style.width = "1300px";
-        z1.style.width = "800px"
-        z2.style.width = "1300px"
+        z0.style.width = "80%"
+        z2.style.width = "100%"
     }
     else {
         x.style.display = "none";
         y.style.width = "1500px";
-        z1.style.width = "1000px";
+        z0.style.width = "100%"
         z2.style.width = "1500px";
     }
 }

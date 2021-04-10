@@ -271,21 +271,20 @@ video {
 }
 
 #videoMedia {
-    width: 220px;
+    width:80%;
 }
 
 #FirstVideoDiv {
-    width: 1450px;
+    width: 100%;
     display: flex;
     flex-direction: row;
 }
 
 #localMedia {
     height: 330px;
-    width: 750px;
+    width: 100%;
     display: flex;
-    /*justify-content: center*/
-    flex-direction: row-reverse;
+    justify-content: center;
     align-items: center;
 }
 
@@ -296,13 +295,12 @@ video {
 }
 
 #Participant {
-    width: 200px;
+    width: 15%;
     height:330px;
     background-color: #343434;
     padding: 5px;
     display: none;
     margin-right: 5px;
-    margin-top:5px;
 }
 
 #Participant p {
@@ -319,7 +317,7 @@ video {
 }
 
 #ParticipantControl {
-    width: 200px;
+    width: 15%;
     height:330px;
     background-color: #343434;
     padding: 5px;
@@ -417,3 +415,11 @@ video {
     font-family: 'Poppins', sans-serif;
     font-size: 15px;
 }
+
+
+
+
+
+
+
+
