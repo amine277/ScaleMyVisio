@@ -17,6 +17,8 @@ const Room = require('./Room')
 const Peer = require('./Peer')
 
 const authRoute = require('../routes/auth');
+const Page_Request = require('../routes/Page_Request');
+
 const _ = require('lodash');
 const cors = require('cors');
 
@@ -55,8 +57,16 @@ mongoose.connect(process.env.DB_URL,
 () => console.log('Connected to DB!')
 );
 
+
+
+
+/*app.get('/test', function(req, res) {
+    res.sendFile('Register.html', {root: __dirname })
+});*/   
+
 //Middleware
 app.use('/',authRoute);
+app.use('/',Page_Request);
 app.use(express.json());
 
 // all mediasoup workers

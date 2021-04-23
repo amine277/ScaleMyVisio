@@ -1,3 +1,4 @@
+
 if (location.href.substr(0, 5) !== 'https')
   location.href = 'https' + location.href.substr(4, location.href.length - 4)
 
@@ -6,7 +7,7 @@ const socket = io()
 
 let producer = null;
 
-nameInput.value = 'bob' + Math.round(Math.random() * 1000)
+//nameInput.value = 'bob' + Math.round(Math.random() * 1000)
 
 socket.request = function request(type, data = {}) {
   return new Promise((resolve, reject) => {
@@ -23,14 +24,36 @@ socket.request = function request(type, data = {}) {
 let rc = null
 
 function joinRoom(name, room_id) {
+
+  
   if (rc && rc.isOpen()) {
     console.log('already connected to a room')
   } else {
+
     rc = new RoomClient(localMedia, remoteVideos, remoteAudios, window.mediasoupClient, socket, room_id, name, roomOpen,ParticipantList)
 
     addListeners()
-  }
+/*  var data = new FormData();
+data.append('name', 'person');
+data.append('RoomId', 5);
 
+
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '/creatRoom', true);
+xhr.onload = function () {
+    // do something to response
+    if(this.responseText){
+      console.log("1")
+
+
+        res.sendFile('Register.html', { root: __dirname });
+
+      }
+    }
+};
+xhr.send(data);*/
+
+  
 }
 
 function roomOpen() {
@@ -108,4 +131,4 @@ navigator.mediaDevices.enumerateDevices().then(devices =>
     option.innerText = device.label
     el.appendChild(option)
   })
-)
+)}

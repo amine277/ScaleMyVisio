@@ -39,36 +39,39 @@
         <p>Welcome to ScaleMyVisio WebConference</p>
     </nav>
     
-    <!--                HOME SECITION                               -->
-    <form action="/login" method="post">
-    <div id="home">
-        <h1>Login</h1>
-        <div class="textbox">
-           <i class="fas fa-at"></i>
-           <input id="homeEmailInput" name="email" value="" type="text" placeholder="Email" />
-        </div>
-        <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
-        <div class="textbox">
-            <i class="fas fa-lock"></i>
-            <input id='homePasswordInput' name ="password" value="" type="password" placeholder="Password" />
-            <span class="eye" onclick="homePasswordHide()">
-                <i id="homeHide1" class="fa fa-eye"></i>
-                <i id="homeHide2" class="fa fa-eye-slash"></i>
-            </span>
-        </div>
-        <div>
-            <button id='homeButton' onclick="   ">Login</button>
-        </div>
-        <div id="noAccount" onclick="home_register">
-            <button><a href="Home.html">Texte du bouton</a></button>
     
-            <p>No account ? <span onclick="O_Register()"> Register</span>  </p>
+
+    <!--                LOGIN SECTION                               -->
+    <!--<div id="centerLogin" class="hidden">-->
+        <form action="/creatRoom" method="post">
+        <div id="login" >
+            <h1>Begin</h1>
+            <div class="textbox">
+                <i class="fas fa-search-location"></i>
+                <input id="roomidInput" name="roomId" value="" type="text" placeholder="Room" />
+            </div>
+            <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
+            <div class="textbox">
+                <i class="fas fa-user"></i>
+                <input id='nameInput' value="" name="name" type="text" onchange="updateName()" placeholder="UserName" />
+            </div>
+            <div id="startButtons">
+                <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
+                <button id='joinStreaming' onclick="login_streaming()">Join Streaming</button>
+                <button id='createButton'>Create Room</button>
+            </div>
         </div>
-    </div>
-    </form>
+        </form>
 
     
+    
+    
+    
     <script type="text/javascript" src="frontScript.js"></script>
+    <script type="text/javascript">
+        joinRoom("yaahya", "111");
+
+</script>
     <script src="/socket.io/socket.io.js"></script>
 
 </body>
@@ -77,7 +80,6 @@
 
 <footer>
     <script src="index.js"></script>
-    
 </footer>
 
 </html>

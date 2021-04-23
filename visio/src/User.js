@@ -19,6 +19,10 @@ const userShema = new mongoose.Schema({
         min: 4,
         max: 20
     },
+    role: {
+        type: Number,
+        default : 0
+    },
     date: {
         type: Date,
         default : Date.now

@@ -6,6 +6,11 @@ const {registerValidation,loginValidation} = require('../routes/validation');
 const { exist } = require('@hapi/joi');
 
 
+
+
+
+
+
 router.post('/register',  async (req,res)=>{
     // Validate data
     const {error} = registerValidation(req.body);

@@ -1,5 +1,19 @@
 /*                   Redirection de fichiers front                      */
 
+
+function O_Register(){
+    
+    res.render('./Register.html');
+
+}
+
+function updateName(){
+    console.log("changing")
+
+    window.localStorage.setItem('name','amine')
+}
+
+
 function home_login(){
     home.className = 'hidden';
     login.className = '';

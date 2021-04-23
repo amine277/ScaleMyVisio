@@ -39,45 +39,44 @@
         <p>Welcome to ScaleMyVisio WebConference</p>
     </nav>
     
-    <!--                HOME SECITION                               -->
-    <form action="/login" method="post">
-    <div id="home">
-        <h1>Login</h1>
+
+
+    <!--                REGISTER SECTION                            -->
+    <form action="/register" method="post">    
+    <div id="register" >
+        <h1>Sign up</h1>
         <div class="textbox">
            <i class="fas fa-at"></i>
-           <input id="homeEmailInput" name="email" value="" type="text" placeholder="Email" />
+           <input id="registerEmailInput"  name="email" value="" type="text" placeholder="Email" />
+        </div>
+        <div class="textbox">
+           <i class="fas fa-user-alt"></i>
+           <input id="PseudoInput" name="name"  value="" type="text" placeholder="Pseudo" />
         </div>
         <!--<button id="createRoom" onclick="createRoom(roomid.value)" label="createRoom">Create Room</button>-->
         <div class="textbox">
             <i class="fas fa-lock"></i>
-            <input id='homePasswordInput' name ="password" value="" type="password" placeholder="Password" />
-            <span class="eye" onclick="homePasswordHide()">
-                <i id="homeHide1" class="fa fa-eye"></i>
-                <i id="homeHide2" class="fa fa-eye-slash"></i>
+            <input id='registerPasswordInput' name="password" value="" type="password" placeholder="Password"/>
+            <span class="eye" onclick="registerPasswordHide()">
+                <i id="registerHide1" class="fa fa-eye"></i>
+                <i id="registerHide2" class="fa fa-eye-slash"></i>
             </span>
         </div>
-        <div>
-            <button id='homeButton' onclick="   ">Login</button>
+        <div class="textbox">
+            <input id='registerNameInput' value="" type="password" placeholder="Type Password again" />
         </div>
-        <div id="noAccount" onclick="home_register">
-            <button><a href="Home.html">Texte du bouton</a></button>
-    
-            <p>No account ? <span onclick="O_Register()"> Register</span>  </p>
+        <div>
+            <button id='loginButton' onclick="home_register()">Submit</button>
         </div>
     </div>
     </form>
-
-    
     <script type="text/javascript" src="frontScript.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
-</body>
+</body> 
 
 
 
 <footer>
     <script src="index.js"></script>
-    
-</footer>
-
-</html>
+</footer>²
