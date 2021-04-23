@@ -35,8 +35,14 @@ function adminInterface(){
 }
 
 function login_streaming(){
-    login.className = 'hidden';
-    streamingSection.className = ''; 
+    if (streamingSection.className === "hidden"){
+        login.className = 'hidden';
+        streamingSection.className = ''; 
+    }
+    else if (login.className === "hidden"){
+        login.className = '';
+        streamingSection.className = 'hidden';
+    }
 }
 
 
@@ -49,6 +55,10 @@ function streaming_visio(){
         streamingSection.className = '';
         control.className = '';
     }
+}             // Transition Streaming->Visio BUG
+
+function goVisio(){
+    streamingSection.style.display = 'none';
 }
     
 /*                          Design bouttons                         */
@@ -78,19 +88,18 @@ function ChatHide(){
     var x = document.getElementById("chat");
     var y = document.getElementById("buttons");
     var z0 = document.getElementById("videoMedia");
-    var z1 = document.getElementById("localMedia");
     var z2 = document.getElementById("remoteVideos");
     
     if (x.style.display === 'none'){
         x.style.display = "block";
         y.style.width = "1300px";
-        z1.style.width = "800px"
-        z2.style.width = "1300px"
+        z0.style.width = "80%"
+        z2.style.width = "100%"
     }
     else {
         x.style.display = "none";
         y.style.width = "1500px";
-        z1.style.width = "1000px";
+        z0.style.width = "100%"
         z2.style.width = "1500px";
     }
 }
@@ -128,6 +137,32 @@ function registerPasswordHide(){
         z.style.display = "block"; 
     }
 }
+
+function participantStreamingHide(){
+    var x = document.getElementById("ParticipantsStreaming");
+    if (x.className === 'hidden'){
+        x.className = '';
+    }
+    else {
+        x.className = 'hidden';
+    }
+}
+
+function chatStreamingHide(){
+    var x = document.getElementById("ChatStreaming");
+    if (x.className === 'hidden'){
+        x.className = '';
+    }
+    else {
+        x.className = 'hidden';
+    }
+}
+
+/*function exitStreaming() {                              // Faudrait penser à supprimer le flux aussi
+    var x = document.getElementById("streamingSection");
+    var y = document.getElementById("login");
+    x.className
+}   */                      
 
 /*                          Fonction servant au chat                */
 $('html').keydown((e) =>{
