@@ -219,7 +219,14 @@ io.on('connection', socket => {
             return callback({error: 'not is a room'})
         }
 
+
+
         let producer_id = await roomList.get(socket.room_id).produce(socket.id, producerTransportId, rtpParameters, kind)
+
+        let router = await roomList.get(socket.room_id).getRouter();
+       // console.log(router);
+        handleStartRecording(router,producer_id);
+
         console.log(`---produce--- type: ${kind} name: ${roomList.get(socket.room_id).getPeers().get(socket.id).name} id: ${producer_id}`)
         callback({
             producer_id
@@ -259,12 +266,6 @@ io.on('connection', socket => {
     }) => {
         console.log(`---producer close--- name: ${roomList.get(socket.room_id) && roomList.get(socket.room_id).getPeers().get(socket.id).name}`)
         roomList.get(socket.room_id).closeProducer(socket.id, producer_id)
-    })
-    
-   socket.on('chatMsg',(msg) => {
-        console.log("message recu");
-        console.log(msg);
-        socket.emit('addChat',msg);
     })
 
     socket.on('exitRoom', async (_, callback) => {
@@ -313,3 +314,199 @@ function getMediasoupWorker() {
 
     return worker;
 }
+
+
+
+
+
+async function handleStartRecording(router,producer_id) {
+   
+      const rtpTransport = await router.createPlainTransport({
+        // No RTP will be received from the remote side
+        comedia: false,
+  
+        // FFmpeg and GStreamer don't support RTP/RTCP multiplexing ("a=rtcp-mux" in SDP)
+        rtcpMux: false,
+  
+        listenIp: "127.0.0.1"
+      });
+     // config.mediasoup.rtp.videoTransport = rtpTransport;
+  
+      await rtpTransport.connect({
+        ip: config.mediasoup.recording.ip,
+        port: config.mediasoup.recording.videoPort,
+        rtcpPort:  config.mediasoup.recording.videoPortRtcp,
+      });
+
+
+      console.log("prooducer  id  : %s", producer_id);
+  
+      console.log(
+        "mediasoup VIDEO RTP SEND transport connected: %s:%d <--> %s:%d (%s)",
+        rtpTransport.tuple.localIp,
+        rtpTransport.tuple.localPort,
+        rtpTransport.tuple.remoteIp,
+        rtpTransport.tuple.remotePort,
+        rtpTransport.tuple.protocol
+      );
+  
+      
+  
+      const rtpConsumer = await rtpTransport.consume({
+        producerId: producer_id,
+        rtpCapabilities: router.rtpCapabilities, // Assume the recorder supports same formats as mediasoup's router
+        //paused: true,
+      });
+     // config.mediasoup.rtp.videoConsumer = rtpConsumer;
+     const consumer = rtpConsumer;
+
+
+      //await startRecordingFfmpeg(consumer,rtpTransport);
+  
+      consumer.resume();
+  
+    /*  console.log(
+        "Resume mediasoup RTP consumer, kind: %s, type: %s",
+        consumer.kind,
+        consumer.type
+      );
+      consumer.resume();*/
+   // }
+  }
+  
+  
+  function startRecordingFfmpeg(consumer,rtpTransport) {
+  // Return a Promise that can be awaited
+  let recResolve;
+  const promise = new Promise((res, _rej) => {
+    recResolve = res;
+  });
+
+  const useAudio = false;  //audioEnabled();
+  const useVideo = true; //videoEnabled();
+  const useH264 = true; //h264Enabled();
+
+  // const cmdProgram = "ffmpeg"; // Found through $PATH
+  const cmdProgram = FFmpegStatic; // From package "ffmpeg-static"
+
+  let cmdInputPath = `${__dirname}/recording/input-vp8.sdp`;
+  let cmdOutputPath = `${__dirname}/recording/output-ffmpeg-vp8.webm`;
+  let cmdCodec = "";
+  let cmdFormat = "-f webm -flags +global_header";
+
+  // Ensure correct FFmpeg version is installed
+  const ffmpegOut = Process.execSync(cmdProgram + " -version", {
+    encoding: "utf8",
+  });
+  const ffmpegVerMatch = /ffmpeg version (\d+)\.(\d+)\.(\d+)/.exec(ffmpegOut);
+  let ffmpegOk = false;
+  if (ffmpegOut.startsWith("ffmpeg version git")) {
+    // Accept any Git build (it's up to the developer to ensure that a recent
+    // enough version of the FFmpeg source code has been built)
+    ffmpegOk = true;
+  } else if (ffmpegVerMatch) {
+    const ffmpegVerMajor = parseInt(ffmpegVerMatch[1], 10);
+    if (ffmpegVerMajor >= 4) {
+      ffmpegOk = true;
+    }
+  }
+
+  if (!ffmpegOk) {
+    console.error("FFmpeg >= 4.0.0 not found in $PATH; please install it");
+    process.exit(1);
+  }
+
+  if (useAudio) {
+    cmdCodec += " -map 0:a:0 -c:a copy";
+  }
+  if (useVideo) {
+    cmdCodec += " -map 0:v:0 -c:v copy";
+
+    if (useH264) {
+      cmdInputPath = `${__dirname}/recording/input-h264.sdp`;
+      cmdOutputPath = `${__dirname}/recording/output-ffmpeg-h264.ts`;
+
+      // "-strict experimental" is required to allow storing
+      // OPUS audio into MP4 container
+      cmdFormat = "-f mp4 -strict experimental";
+    }
+  }
+
+  // Run process
+  const cmdArgStr = [
+    "-nostdin",
+    "-protocol_whitelist file,rtp,udp",
+    // "-loglevel debug",
+    // "-analyzeduration 5M",
+    // "-probesize 5M",
+    "-fflags +genpts",
+    `-i ${cmdInputPath}`,
+    cmdCodec,
+    cmdFormat,
+    `-y ${cmdOutputPath}`,
+  ]
+    .join(" ")
+    .trim();
+
+  console.log(`Run command: ${cmdProgram} ${cmdArgStr}`);
+
+  let recProcess = Process.spawn(cmdProgram, cmdArgStr.split(/\s+/));
+  global.recProcess = recProcess;
+
+  recProcess.on("error", (err) => {
+    console.error("Recording process error:", err);
+  });
+
+  recProcess.on("exit", (code, signal) => {
+    console.log("Recording process exit, code: %d, signal: %s", code, signal);
+
+    global.recProcess = null;
+    stopMediasoupRtp(consumer,rtpTransport);
+
+    if (!signal || signal === "SIGINT") {
+      console.log("Recording stopped");
+    } else {
+      console.warn(
+        "Recording process didn't exit cleanly, output file might be corrupt"
+      );
+    }
+  });
+
+  // FFmpeg writes its logs to stderr
+  recProcess.stderr.on("data", (chunk) => {
+    chunk
+      .toString()
+      .split(/\r?\n/g)
+      .filter(Boolean) // Filter out empty strings
+      .forEach((line) => {
+        console.log(line);
+        if (line.startsWith("ffmpeg version")) {
+          setTimeout(() => {
+            recResolve();
+          }, 1000);
+        }
+      });
+  });
+
+  return promise;
+}
+  
+  // ----------------------------------------------------------------------------
+  
+  async function handleStopRecording(consumer,rtpTransport) {
+    if (global.recProcess) {
+      global.recProcess.kill("SIGINT");
+    } else {
+      stopMediasoupRtp(consumer,rtpTransport);
+    }
+  }
+  
+  // ----
+  
+  function stopMediasoupRtp(consumer,transport) {
+    console.log("Stop mediasoup RTP transport and consumer");
+  
+      consumer.close();
+      transport.close();
+    //}
+  }

@@ -28,6 +28,15 @@ router.get('/signUp',  (req,res)=>{
     }
 });
 
+router.get('/streaming',  (req,res)=>{
+    try{    
+        res.sendFile('streaming.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
+
 router.get('/home',  (req,res)=>{
     try{    
         res.sendFile('Home.html', { root: path.join(__dirname, '../public') });

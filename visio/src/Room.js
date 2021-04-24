@@ -140,6 +140,9 @@ module.exports = class Room {
     getPeers(){
         return this.peers
     }
+    getRouter(){
+        return this.router
+    }
 
 
 
