@@ -58,7 +58,7 @@
             <div id="startButtons">
                 <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
                 <button id='joinStreaming' onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
-                <button id='createButton'>Create Room</button>
+                <button id='createButton'  onclick="Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
             </div>
         </div>
         </form>
@@ -72,10 +72,14 @@
     
     <script type="text/javascript" src="frontScript.js"></script>
     <script type="text/javascript">
-        joinRoom("yaahya", "111");
+
 
 </script>
     <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        // Mon code Javascript
+        localStorage.setItem('inRoom',0)
+      </script>
 
 </body>
 

@@ -2,6 +2,22 @@ const router = require('express').Router();
 const path = require('path');
 //const { joinRoom } = require('../public/index');
 
+router.post('/exitRoom',function(req,res){
+
+    console.log("ddddd")
+     
+    //console.log(user_name)
+   // console.log(roomId)
+
+
+    //joinRoom("yahya", "11");
+    res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
+
+
+
+
+  });
+
 router.post('/creatRoom',function(req,res){
     console.log("sasass")
     var user_name = req.body.name;

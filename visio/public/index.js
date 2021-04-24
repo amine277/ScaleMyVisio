@@ -57,7 +57,6 @@ xhr.send(data);*/
 }
 
 function roomOpen() {
-  login.className = 'hidden'
   reveal(startAudioButton)
   hide(stopAudioButton)
   reveal(startVideoButton)
@@ -110,7 +109,6 @@ function addListeners() {
   })
   rc.on(RoomClient.EVENTS.exitRoom, () => {
     hide(control)
-    reveal(login)
     hide(videoMedia)
   })
 }

@@ -68,7 +68,7 @@
                 <div id='stopVideoButton' class='hidden' onclick="rc.closeProducer(RoomClient.mediaType.video)">
                     <i class="fas fa-video-slash"></i><p>Stop Camera</p>
                 </div>
-                <div id='startScreenButton'  onclick="rc.produce(RoomClient.mediaType.screen)">
+                <div id='startScreenButton' class='unhidden' onclick="rc.produce(RoomClient.mediaType.screen)">
                     <i class="fas fa-desktop"></i><p>Share screen</p>
                 </div>
                 <div id='stopScreenButton' class='hidden' onclick="rc.closeProducer(RoomClient.mediaType.screen)">
@@ -89,11 +89,13 @@
                     <i class="fas fa-comment-alt" onclick="ChatHide()"></i><p>Chat</p>
                 </div>
             </div>
+            <form action="/exitRoom" method="post">
             <div id="buttons_exit">
-                <div id='exitButton' class='hidden' onclick="rc.exit()">
-                    <i class="fas fa-door-open"></i><p>Exit</p>
+                <div id='exitButton' type="submit"  onclick="exitRoom(),rc.exit()">
+                   <button type="submit" class="fas fa-door-open"></button><p>Exit</p>
                 </div>
             </div>
+            </form>
         </div>
         <!--<br />-->
         <div id="chat">
@@ -145,7 +147,16 @@
     <script src="index.js"></script>
     <script type="text/javascript">
         // Mon code Javascript
-        joinRoom("yaahya", "111");
+        var inRoom = localStorage.getItem('inRoom');
+        console.log(inRoom)
+
+        if(inRoom == 0 ){
+            console.log("yaa")
+        var name = localStorage.getItem('name');
+        var RoomId = localStorage.getItem('RoomId');
+        localStorage.setItem('inRoom',1);
+        joinRoom(name,RoomId);}
+
       </script>
 </footer>
 

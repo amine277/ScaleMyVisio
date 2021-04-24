@@ -1,17 +1,18 @@
 /*                   Redirection de fichiers front                      */
 
 
-function O_Register(){
-    
-    res.render('./Register.html');
+function Room_update_loc(name,RoomId){
+    localStorage.setItem('name',name)
+    localStorage.setItem('RoomId',RoomId)
+}
+
+function exitRoom(){
+    localStorage.removeItem('name')
+    localStorage.removeItem('RoomId')
+    localStorage.setItem('inRoom',0)
 
 }
 
-function updateName(){
-    console.log("changing")
-
-    window.localStorage.setItem('name','amine')
-}
 
 
 function home_login(){
