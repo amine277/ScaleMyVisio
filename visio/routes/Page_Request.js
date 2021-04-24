@@ -35,9 +35,28 @@ router.post('/creatRoom',function(req,res){
 
   });
 
-router.get('/signUp',  (req,res)=>{
+router.get('/creatRoom',  (req,res)=>{
     try{    
         res.sendFile('Register.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
+
+
+router.get('/exitRoom',  (req,res)=>{
+    try{    
+        res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
+
+router.get('/signUp',  (req,res)=>{
+    try{    
+        res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
     }
     catch(err){
         res.status(400).send(err);

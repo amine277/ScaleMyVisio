@@ -61,7 +61,7 @@ function roomOpen() {
   hide(stopAudioButton)
   reveal(startVideoButton)
   hide(stopVideoButton)
-  hide(startScreenButton)
+  reveal(startScreenButton)
   hide(stopScreenButton)
   reveal(exitButton)
   control.className = ''
@@ -78,16 +78,7 @@ function reveal(elem) {
 
 
 function addListeners() {
-  rc.on(RoomClient.EVENTS.startScreen, () => {
-    hide(startScreenButton)
-    reveal(stopScreenButton)
-  })
 
-  rc.on(RoomClient.EVENTS.stopScreen, () => {
-    hide(stopScreenButton)
-    reveal(startScreenButton)
-
-  })
 
   rc.on(RoomClient.EVENTS.stopAudio, () => {
     hide(stopAudioButton)
