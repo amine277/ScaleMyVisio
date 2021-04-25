@@ -20,20 +20,23 @@ function data_roomCreated(user,RoomId){
 
 }
 
+
+router.post('/ChooseStream', async function(req,res){
+    
+
+
+
+
+  });
+
 router.post('/infoRequest', async function(req,res){
     
 
     console.log("infoRequest")
     const user = await User.findOne({email:req.body.email})
 
-   // console.log(roomId)
-
-
-    //joinRoom("yahya", "11");
+   
     res.send(user._id)
-
-
-
 
   });
   
@@ -44,14 +47,14 @@ router.post('/exitRoom',function(req,res){
     res.send({value:true});
   });
 
-router.post('/creatRoom', function(req,res){
-    console.log("asa")
+router.post('/creatRoom', async function(req,res){
     var user_name = req.body.name;
     var roomId = req.body.roomId;
     var Id = req.body.Id;
-     
-    console.log(roomId);
-   res.send({value : true })
+
+    const user = await User.findOne({_id:Id})
+    user.room = roomId;
+    user.role = 1;
 
     //const user = await User.findOne({_id:Id})
     //user.room=roomId;
@@ -59,18 +62,20 @@ router.post('/creatRoom', function(req,res){
     //joinRoom("yahya", "11");
   /*  var inputValue = req.body.redirect;
     if (inputValue == "Join Visioconf"){
-        res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });}
+        res.sendFile('Visio.html', { root: path.join(dirname, '../public') });}
     else if (inputValue == "Join Streaming"){
-        res.sendFile('streaming.html', { root: path.join(__dirname, '../public') });}
+        res.sendFile('streaming.html', { root: path.join(dirname, '../public') });}
     else if (inputValue == "CreateRoom"){
-        res.sendFile('admin.html', { root: path.join(__dirname, '../public') });}
+        res.sendFile('admin.html', { root: path.join(dirname, '../public') });}
     else {
-        res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
+        res.sendFile('Home.html', { root: path.join(dirname, '../public') });
+*/
+    try{
+        res.send({value:true})
     }
->>>>>>> f29a19d658f6539e29e8bffa5a611e69bd3a2dcc*/
-
-
-
+    catch(err){
+        res.send(err);
+    }
   });
 
 router.post('/stream',function(req,res){

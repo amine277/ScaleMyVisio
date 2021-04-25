@@ -21,6 +21,24 @@ function SignUp_Request(email,pseudo,pwd){
     
 }
 
+function login_streaming() {
+
+    axios.post('/ChooseStream', {
+        Id: localStorage.setItem('Id')   
+      })
+      .then((response) => {
+          console.log(response.data)
+          if(response.data.value){
+            localStorage.setItem('Id',response.data.Id)
+            window.location.pathname = '/Home'
+        }
+        
+      }, (error) => {
+        console.log(error);
+      });
+    
+}
+
 function logIn_Request(email,pwd){
 
     axios.post('/LogIn', {
