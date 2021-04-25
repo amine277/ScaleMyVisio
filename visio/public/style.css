@@ -358,6 +358,9 @@ video {
     justify-content: center;
     align-items: center;
 }
+#remoteVideos Video {
+    margin-right: 15px;
+}
 
 /*                      Streaming Section                                   */
 
