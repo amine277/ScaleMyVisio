@@ -1,7 +1,14 @@
 const router = require('express').Router();
 const path = require('path');
+
+const shell = require('shelljs') ;
+const exec = require('child_process').exec;
+const { spawn } = require('child_process');
+
+
 const User = require('../src/User');
 const Room = require('../src/Rooms');
+
 
 //const { joinRoom } = require('../public/index');
 
@@ -54,6 +61,7 @@ router.post('/creatRoom', async function(req,res){
     });
 
 
+
     try{
 
         room.name = roomName;
@@ -79,8 +87,31 @@ router.post('/creatRoom', async function(req,res){
         res.sendFile('admin.html', { root: path.join(__dirname, '../public') });}
     else {
         res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
+<<<<<<< HEAD
 */
 
+
+
+
+  });
+
+router.post('/stream',function(req,res){
+
+
+    console.log("streaaaam");
+    try {
+        
+        const child =exec("./stream.sh");
+
+        child.stdout.pipe(process.stdout);
+        child.stderr.pipe(process.stderr);
+   
+        res.status(204).send();
+     }
+    catch(err){
+        res.status(400).send(err);
+    }
+    
   });
 
 

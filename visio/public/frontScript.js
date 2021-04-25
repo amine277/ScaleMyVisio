@@ -65,7 +65,9 @@ function creatRoom(name,RoomId,Id){
         Id: Id
       })
       .then((response) => {
-          if(response){
+        console.log(response);
+
+          if(response.data.value){
         window.location.pathname = '/Visio'}
         
       }, (error) => {
@@ -146,6 +148,7 @@ function adminInterface(){
     passageVisioStreaming.className = 'hidden';
     controlePassage.className = '';
 }
+
 
 /*                          Design bouttons                         */
 function ParticipantHide(){
