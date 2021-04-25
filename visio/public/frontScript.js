@@ -1,67 +1,10 @@
 /*                   Redirection de fichiers front                      */
 
-
-function Room_update_loc(name,RoomId){
-    localStorage.setItem('name',name)
-    localStorage.setItem('RoomId',RoomId)
-}
-
-function exitRoom(){
-    localStorage.removeItem('name')
-    localStorage.removeItem('RoomId')
-    localStorage.setItem('inRoom',0)
-
-}
-
-
-
-function home_login(){
-    home.className = 'hidden';
-    login.className = '';
-}
-
-function home_register(){
-    if (register.className === "hidden"){
-        home.className = 'hidden';
-        register.className = '';}
-    else if (home.className === "hidden"){
-        register.className = 'hidden';
-        home.className = '';  
-    }
-}
-
 function adminInterface(){
     passageVisioStreaming.className = 'hidden';
     controlePassage.className = '';
 }
 
-function login_streaming(){
-    if (streamingSection.className === "hidden"){
-        login.className = 'hidden';
-        streamingSection.className = ''; 
-    }
-    else if (login.className === "hidden"){
-        login.className = '';
-        streamingSection.className = 'hidden';
-    }
-}
-
-
-function streaming_visio(){
-    if (streamingSection.className === "hidden"){
-        control.className = 'hidden';
-        streamingSection.className = '';
-    }
-    else if (control.className === "hidden"){
-        streamingSection.className = '';
-        control.className = '';
-    }
-}             // Transition Streaming->Visio BUG
-
-function goVisio(){
-    streamingSection.style.display = 'none';
-}
-    
 /*                          Design bouttons                         */
 function ParticipantHide(){
     var x = document.getElementById("Participant");
@@ -151,25 +94,22 @@ function participantStreamingHide(){
 
 function chatStreamingHide(){
     var x = document.getElementById("ChatStreaming");
+    var y = document.getElementById("StreamingButtons");
     if (x.className === 'hidden'){
         x.className = '';
+        y.style.width = "80%";
     }
     else {
         x.className = 'hidden';
+        y.style.width = "100%"
     }
 }
 
-/*function exitStreaming() {                              // Faudrait penser à supprimer le flux aussi
-    var x = document.getElementById("streamingSection");
-    var y = document.getElementById("login");
-    x.className
-}   */                      
-
-/*                          Fonction servant au chat                */
+/*                          Fonction servant au chat                
 $('html').keydown((e) =>{
     if (e.which == 13){
         const text = $('#chat_input');
         rc.sendChat(text.val());
         text.val("");
     }
-})
+})*/

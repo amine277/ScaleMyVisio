@@ -400,7 +400,7 @@ video {
     position: fixed;
     bottom: 0;
     display: flex;
-    width: 80%;
+    width: 100%;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;

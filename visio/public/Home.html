@@ -56,9 +56,9 @@
                 <input id='nameInput' value="" name="name" type="text" onchange="updateName()" placeholder="UserName" />
             </div>
             <div id="startButtons">
-                <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
-                <button id='joinStreaming' onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
-                <button id='createButton'  onclick="Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
+                <input type="submit" name="redirect" value="Join Visioconf" id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)"/>
+                <input type="submit" name="redirect" value="Join Streaming"/>
+                <input type="submit" name="redirect" value="CreateRoom" id='createButton'  onclick="Room_update_loc(nameInput.value,roomidInput.value)"/>
             </div>
         </div>
         </form>
