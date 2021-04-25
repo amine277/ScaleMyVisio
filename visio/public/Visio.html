@@ -75,7 +75,7 @@
                     <i class="fas fa-desktop"></i><p>Stop Sharing</p>
                 </div>
             </div>
-            <div id="buttons_deco">
+            <div class="buttons_deco">
                 <div id="passageVisioStreaming" onclick="streaming_visio()">
                     <i class="fab fa-twitch"></i><p>Go Streaming</p>
                 </div>
@@ -90,16 +90,14 @@
                 </div>
             </div>
             <form action="/exitRoom" method="post">
-            <div id="buttons_exit">
                 <div id='exitButton' type="submit"  onclick="exitRoom(),rc.exit()">
-                   <button type="submit" class="fas fa-door-open"></button><p>Exit</p>
+                   <button type="submit"><i class="fas fa-door-open"></i><p>Exit</p></button>
                 </div>
-            </div>
             </form>
         </div>
         <!--<br />-->
         <div id="chat">
-             <div id="chat_header">
+             <div class="chat_header">
                <p>Chat</p>
                <ul id="conteneurMessage">
                    

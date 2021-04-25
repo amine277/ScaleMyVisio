@@ -38,13 +38,6 @@ nav p {
 
 /*                                  LOGIN SECTION                               */
 
-/*#centerLogin {
-    display: flex;
-    height: 72%;
-    justify-content: center;
-    align-items: center;
-}*/
-
 #login {
     width: 280px;
     position: absolute;
@@ -98,7 +91,7 @@ nav p {
     width: 430px;
 }
 
-#startButtons button {
+#startButtons input {
     width: 30%;
     background: none;
     border: 2px solid #4caf50;
@@ -206,8 +199,8 @@ nav p {
 #buttons {
     position: fixed;
     bottom: 0;
-    display: flex;
     width: 1300px;
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
@@ -221,7 +214,7 @@ nav p {
     font-size: 15px;
 }
 
-.buttons_main {
+#buttons_main {
     display: flex;
     flex-direction: row;
 }
@@ -229,11 +222,21 @@ nav p {
     display: flex;
     flex-direction: row;
 }
-.buttons_exit {
+#buttons_exit {
     display: flex;
     flex-direction: row;
 }
 
+#exitButton button {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+	margin-top: 18px;
+}
 
 /*              Chat Div            */
 
@@ -259,10 +262,10 @@ nav p {
 }
 
 #chat_message input {
+    margin:0 20px;
     background-color: transparent;
     border: none;
     width:100%;
-    height: 100%;
     color: #F5F5F5;
 }
 

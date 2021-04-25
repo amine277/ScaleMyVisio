@@ -12,10 +12,6 @@ router.post('/exitRoom',function(req,res){
 
     //joinRoom("yahya", "11");
     res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
-
-
-
-
   });
 
 router.post('/creatRoom',function(req,res){
@@ -28,13 +24,16 @@ router.post('/creatRoom',function(req,res){
 
 
     //joinRoom("yahya", "11");
-    var inputValue = req.body.redirect
+    var inputValue = req.body.redirect;
     if (inputValue == "Join Visioconf"){
     res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });}
     else if (inputValue == "Join Streaming"){
     res.sendFile('streaming.html', { root: path.join(__dirname, '../public') });}
     else if (inputValue == "CreateRoom"){
     res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });}
+    else {
+        res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
+    }
 
 
 
