@@ -26,11 +26,11 @@ router.post('/creatRoom',function(req,res){
     //joinRoom("yahya", "11");
     var inputValue = req.body.redirect;
     if (inputValue == "Join Visioconf"){
-    res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });}
+        res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });}
     else if (inputValue == "Join Streaming"){
-    res.sendFile('streaming.html', { root: path.join(__dirname, '../public') });}
+        res.sendFile('streaming.html', { root: path.join(__dirname, '../public') });}
     else if (inputValue == "CreateRoom"){
-    res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });}
+        res.sendFile('admin.html', { root: path.join(__dirname, '../public') });}
     else {
         res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
     }
@@ -90,6 +90,15 @@ router.get('/home',  (req,res)=>{
 router.get('/visio',  (req,res)=>{
     try{    
         res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
+
+router.get('/admin',  (req,res)=>{
+    try{    
+        res.sendFile('admin.html', { root: path.join(__dirname, '../public') });
     }
     catch(err){
         res.status(400).send(err);
