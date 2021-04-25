@@ -12,7 +12,7 @@ const path = require('path');
 
 
 
-router.post('/register',  async (req,res)=>{
+router.post('/SignUp',  async (req,res)=>{
     // Validate data
     const {error} = registerValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -33,12 +33,11 @@ router.post('/register',  async (req,res)=>{
     });
     try{
         const savedUser =  await user.save();
-        //res.send({userId : user._id });
+        res.send({value:true,Id:user._id});
     }
     catch(err){
         res.status(400).send(err);
     }
-    res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
 
 });
 
@@ -47,24 +46,31 @@ router.post('/register',  async (req,res)=>{
 
 router.post('/LogIn', async (req,res) => {
     console.dir(req.body)
-    console.log("sa")
+ 
     // Validate data
     const {error} = loginValidation(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
+    if(error) return res.send(error.details[0].message);
 
     // check email
     const user = await User.findOne({email:req.body.email})
-    if(!user) return res.status(400).send('Email not found !');
+    if(!user) return res.send('Email not found !');
 
     // check password 
     const validPass = await bcrypt.compare(req.body.password,user.password);
-    if(!validPass) return res.status(400).send('Invalid password !');
+    if(!validPass) return res.send('Invalid password !');
 
     // Create and assign Token 
     const token = jwt.sign({_id: user._id},process.env.Secret_Token);
+    //res.redirect('/Home.html');
     //res.header('auth-token',token).send(token);
     //home_register()    //res.send('Logged in !');
-    res.send({value:true,Id:user._id});
+    try{
+        res.send({value:true,Id:user._id});
+
+    }
+    catch(err){
+        res.send(err);
+    }
 });
 
 

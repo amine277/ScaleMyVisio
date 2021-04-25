@@ -1,5 +1,26 @@
 /*                   Redirection de fichiers front                      */
 
+
+function SignUp_Request(email,pseudo,pwd){
+
+    axios.post('/SignUp', {
+        email: email,
+        name: pseudo,
+        password: pwd
+      })
+      .then((response) => {
+          console.log(response.data)
+          if(response.data.value){
+            localStorage.setItem('Id',response.data.Id)
+            window.location.pathname = '/Home'
+        }
+        
+      }, (error) => {
+        console.log(error);
+      });
+    
+}
+
 function logIn_Request(email,pwd){
 
     axios.post('/LogIn', {
@@ -7,16 +28,15 @@ function logIn_Request(email,pwd){
         password: pwd,
       })
       .then((response) => {
+          console.log(response.data)
           if(response.data.value){
-            localStorage.setItem('Id',response.Id)
+            localStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
         }
         
       }, (error) => {
         console.log(error);
       });
-
-
     
 }
 
@@ -40,8 +60,6 @@ function creatRoom(name,RoomId,Id){
 }
 
 function SendRequest(payload,url){
-
- 
 
 // Turn the data object into an array of URL-encoded key/value pairs.
 
@@ -70,9 +88,21 @@ function Room_update_loc(name,RoomId){
 }
 
 function exitRoom(){
-    localStorage.removeItem('name')
-    localStorage.removeItem('RoomId')
-    localStorage.setItem('inRoom',0)
+    axios.post('/exitRoom', {
+        Id: localStorage.getItem('Id')
+      })
+
+      .then((response) => {
+          if(response.data.value){
+            localStorage.removeItem('name')
+            localStorage.removeItem('RoomId')
+            localStorage.setItem('inRoom',0)
+            window.location.pathname = '/Home'}
+        
+      }, (error) => {
+        console.log(error);
+      });
+
 
 }
 
@@ -102,33 +132,6 @@ function adminInterface(){
     controlePassage.className = '';
 }
 
-function login_streaming(){
-    if (streamingSection.className === "hidden"){
-        login.className = 'hidden';
-        streamingSection.className = ''; 
-    }
-    else if (login.className === "hidden"){
-        login.className = '';
-        streamingSection.className = 'hidden';
-    }
-}
-
-
-function streaming_visio(){
-    if (streamingSection.className === "hidden"){
-        control.className = 'hidden';
-        streamingSection.className = '';
-    }
-    else if (control.className === "hidden"){
-        streamingSection.className = '';
-        control.className = '';
-    }
-}             // Transition Streaming->Visio BUG
-
-function goVisio(){
-    streamingSection.style.display = 'none';
-}
-    
 /*                          Design bouttons                         */
 function ParticipantHide(){
     var x = document.getElementById("Participant");
@@ -218,25 +221,22 @@ function participantStreamingHide(){
 
 function chatStreamingHide(){
     var x = document.getElementById("ChatStreaming");
+    var y = document.getElementById("StreamingButtons");
     if (x.className === 'hidden'){
         x.className = '';
+        y.style.width = "80%";
     }
     else {
         x.className = 'hidden';
+        y.style.width = "100%"
     }
 }
 
-/*function exitStreaming() {                              // Faudrait penser à supprimer le flux aussi
-    var x = document.getElementById("streamingSection");
-    var y = document.getElementById("login");
-    x.className
-}   */                      
-
-/*                          Fonction servant au chat                */
+/*                          Fonction servant au chat                
 $('html').keydown((e) =>{
     if (e.which == 13){
         const text = $('#chat_input');
         rc.sendChat(text.val());
         text.val("");
     }
-})
+})*/

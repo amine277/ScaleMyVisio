@@ -56,9 +56,11 @@
                 <input id='nameInput' value="" name="name" type="text" onchange="updateName()" placeholder="UserName" />
             </div>
             <div id="startButtons">
-                <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
-                <button id='joinStreaming' onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
-                <button id='createButton'  onclick="creatRoom(nameInput.value,roomidInput.value,55);Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
+
+                <button id='joinButton' name="redirect" onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
+                <button id='joinStreaming' name="redirect" onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
+                <button id='createButton' name="redirect" onclick="creatRoom(nameInput.value,roomidInput.value,55);Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
+                
             </div>
         </div>
 
@@ -86,9 +88,9 @@
         if(!Id){   
         SendRequest(payload,"/infoRequest");}
 
-        var inRoom = localStorage.getItem('inRoom');
-        if(!inRoom){
-        localStorage.setItem('inRoom',0)}
+        //var inRoom = localStorage.getItem('inRoom');
+        
+        localStorage.setItem('inRoom',0)
       </script>
 
 </body>
