@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
 const User = require('../src/User');
+const Room = require('../src/Rooms');
 
 //const { joinRoom } = require('../public/index');
 
@@ -22,7 +23,6 @@ router.post('/infoRequest', async function(req,res){
    // console.log(roomId)
 
 
-    //joinRoom("yahya", "11");
     res.send(user._id)
 
 
@@ -37,15 +37,35 @@ router.post('/exitRoom',function(req,res){
     res.send({value:true});
   });
 
-router.post('/creatRoom', function(req,res){
-    console.log("asa")
+router.post('/creatRoom', async function(req,res){
     var user_name = req.body.name;
-    var roomId = req.body.roomId;
+    var roomName = req.body.roomId;
     var Id = req.body.Id;
      
-    console.log(roomId);
+    const user = await User.findOne({_id:Id})
+    user.room = roomName;
+    user.role = 1;
+
+    const room = new Room({
+        admin : Id,
+        name : roomName,
+
+        
+    });
 
 
+    try{
+
+        room.name = roomName;
+        room.participant.push(Id);
+        const savedUser =  await room.save();
+        res.send({value:true})
+
+        //res.send({value:true,Id:user._id});
+    }
+    catch(err){
+        res.send(err);
+    }
     //const user = await User.findOne({_id:Id})
     //user.room=roomId;
     //console.log(user.room);
@@ -59,16 +79,10 @@ router.post('/creatRoom', function(req,res){
         res.sendFile('admin.html', { root: path.join(__dirname, '../public') });}
     else {
         res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
-    }
->>>>>>> f29a19d658f6539e29e8bffa5a611e69bd3a2dcc*/
-
-
-    //joinRoom("yahya", "11");
-    res.send(true)
-
-
+*/
 
   });
+
 
 router.get('/LogIn',  (req,res)=>{
     try{    
@@ -108,7 +122,14 @@ router.get('/home',  (req,res)=>{
     }
 });
 
-
+router.get('/index',  (req,res)=>{
+    try{    
+        res.sendFile('index.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
 router.get('/visio',  (req,res)=>{
     try{    
         res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });

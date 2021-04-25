@@ -14,12 +14,13 @@ const path = require('path');
 
 router.post('/SignUp',  async (req,res)=>{
     // Validate data
+    console.log("dada")
     const {error} = registerValidation(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
+    if(error) return res.send(error.details[0].message);
 
     // check if user already exist
     const emailExist = await User.findOne({email:req.body.email})
-    if(emailExist) return res.status(400).send('Email already exist !')
+    if(emailExist) return res.send('Email already exist !')
 
     //Hash the password
     const salt = await  bcrypt.genSalt(10);
@@ -32,11 +33,15 @@ router.post('/SignUp',  async (req,res)=>{
         password : hashedPassword
     });
     try{
+        console.log('ysa')
+
         const savedUser =  await user.save();
-        res.send({value:true,Id:user._id});
+
+        res.send({value:true})
+        //res.send({value:true,Id:user._id});
     }
     catch(err){
-        res.status(400).send(err);
+        res.send(err);
     }
 
 });

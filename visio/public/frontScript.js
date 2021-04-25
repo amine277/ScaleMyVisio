@@ -1,5 +1,20 @@
 /*                   Redirection de fichiers front                      */
 
+function IsLogedIn(){
+    var Id = localStorage.getItem('Id');
+    if(!Id){
+        window.location.pathname = '/index'
+
+    }
+}
+
+function IsLogedOut(){
+    var Id = localStorage.getItem('Id');
+    if(Id){
+        window.location.pathname = '/Home'
+
+    }
+}
 
 function SignUp_Request(email,pseudo,pwd){
 
