@@ -1,5 +1,68 @@
 /*                   Redirection de fichiers front                      */
 
+function logIn_Request(email,pwd){
+
+    axios.post('/LogIn', {
+        email: email,
+        password: pwd,
+      })
+      .then((response) => {
+          if(response.data.value){
+            localStorage.setItem('Id',response.Id)
+            window.location.pathname = '/Home'
+        }
+        
+      }, (error) => {
+        console.log(error);
+      });
+
+
+    
+}
+
+
+function creatRoom(name,RoomId,Id){
+
+
+    axios.post('/creatRoom', {
+        roomId: RoomId,
+        name: name,
+        Id: Id
+      })
+      .then((response) => {
+          if(response){
+        window.location.pathname = '/Visio'}
+        
+      }, (error) => {
+        console.log(error);
+      });
+
+}
+
+function SendRequest(payload,url){
+
+ 
+
+// Turn the data object into an array of URL-encoded key/value pairs.
+
+(async () => {
+    const rawResponse = await fetch('/infoRequest', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    const Id = await rawResponse.json();
+  
+   // console.log(Id);
+    localStorage.setItem('Id',Id)
+
+  })();
+
+
+}
 
 function Room_update_loc(name,RoomId){
     localStorage.setItem('name',name)
@@ -13,6 +76,10 @@ function exitRoom(){
 
 }
 
+function Updateinfo(email){
+    localStorage.setItem('email',email)
+
+}
 
 
 function home_login(){

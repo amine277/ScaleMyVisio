@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {registerValidation,loginValidation} = require('../routes/validation');
 const { exist } = require('@hapi/joi');
+const path = require('path');
 
 
 
@@ -37,14 +38,16 @@ router.post('/register',  async (req,res)=>{
     catch(err){
         res.status(400).send(err);
     }
+    res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
 
 });
 
 
 // LOGIN
 
-router.post('/login', async (req,res) => {
-
+router.post('/LogIn', async (req,res) => {
+    console.dir(req.body)
+    console.log("sa")
     // Validate data
     const {error} = loginValidation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
@@ -61,6 +64,7 @@ router.post('/login', async (req,res) => {
     const token = jwt.sign({_id: user._id},process.env.Secret_Token);
     //res.header('auth-token',token).send(token);
     //home_register()    //res.send('Logged in !');
+    res.send({value:true,Id:user._id});
 });
 
 

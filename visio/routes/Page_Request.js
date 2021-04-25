@@ -1,7 +1,34 @@
 const router = require('express').Router();
 const path = require('path');
+const User = require('../src/User');
+
 //const { joinRoom } = require('../public/index');
 
+
+
+function data_roomCreated(user,RoomId){
+
+    
+
+
+}
+
+router.post('/infoRequest', async function(req,res){
+    
+
+    console.log("infoRequest")
+    const user = await User.findOne({email:req.body.email})
+
+   // console.log(roomId)
+
+
+    //joinRoom("yahya", "11");
+    res.send(user._id)
+
+
+
+
+  });
 router.post('/exitRoom',function(req,res){
 
     console.log("ddddd")
@@ -18,18 +45,22 @@ router.post('/exitRoom',function(req,res){
 
   });
 
-router.post('/creatRoom',function(req,res){
-    console.log("sasass")
+router.post('/creatRoom', function(req,res){
+    console.log("asa")
     var user_name = req.body.name;
     var roomId = req.body.roomId;
+    var Id = req.body.Id;
      
-    console.log(user_name)
-    console.log(roomId)
+    console.log(roomId);
+
+
+    //const user = await User.findOne({_id:Id})
+    //user.room=roomId;
+    //console.log(user.room);
 
 
     //joinRoom("yahya", "11");
-    res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });
-
+    res.send(true)
 
 
 

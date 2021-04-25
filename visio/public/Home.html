@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="modules/mediasoupclient.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"></script>
@@ -43,7 +44,6 @@
 
     <!--                LOGIN SECTION                               -->
     <!--<div id="centerLogin" class="hidden">-->
-        <form action="/creatRoom" method="post">
         <div id="login" >
             <h1>Home</h1>
             <div class="textbox">
@@ -58,10 +58,9 @@
             <div id="startButtons">
                 <button id='joinButton' onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
                 <button id='joinStreaming' onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
-                <button id='createButton'  onclick="Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
+                <button id='createButton'  onclick="creatRoom(nameInput.value,roomidInput.value,55);Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
             </div>
         </div>
-        </form>
 
 
 
@@ -78,7 +77,18 @@
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
         // Mon code Javascript
-        localStorage.setItem('inRoom',0)
+        var email = localStorage.getItem('email');
+        var payload = {
+        email: email
+        };
+
+        var Id = localStorage.getItem('Id');
+        if(!Id){   
+        SendRequest(payload,"/infoRequest");}
+
+        var inRoom = localStorage.getItem('inRoom');
+        if(!inRoom){
+        localStorage.setItem('inRoom',0)}
       </script>
 
 </body>
@@ -87,6 +97,11 @@
 
 <footer>
     <script src="index.js"></script>
+    <script>
+        if ( window.history.replaceState ) {
+          window.history.replaceState( null, null, window.location.href );
+        }
+        </script>
 </footer>
 
 </html>
