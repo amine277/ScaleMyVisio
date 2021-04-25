@@ -76,9 +76,12 @@
                 </div>
             </div>
             <div id="buttons_deco">
-                <div id="passageVisioStreaming" onclick="streaming_visio()">
-                    <i class="fab fa-twitch"></i><p>Go Streaming</p>
+                <form action="/stream" method="post">
+                <div id="passageVisioStreaming" >
+                    <button class="fab fa-twitch"></button><p>Go Streaming</p>
                 </div>
+                </form>
+                
                 <div id="controlePassage" class='hidden'>
                     <i class="fas fa-user-check" onclick="ParticipantControlHide()"></i><p>Control</p>
                 </div>
@@ -137,6 +140,7 @@
     
     
     <script type="text/javascript" src="frontScript.js"></script>
+    <script type="text/javascript" src="stream.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
 </body>
@@ -147,6 +151,8 @@
     <script src="index.js"></script>
     <script type="text/javascript">
         // Mon code Javascript
+
+
         var inRoom = localStorage.getItem('inRoom');
         console.log(inRoom)
 

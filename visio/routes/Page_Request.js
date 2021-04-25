@@ -1,5 +1,10 @@
 const router = require('express').Router();
 const path = require('path');
+const shell = require('shelljs') ;
+const exec = require('child_process').exec;
+const { spawn } = require('child_process');
+
+
 //const { joinRoom } = require('../public/index');
 
 router.post('/exitRoom',function(req,res){
@@ -31,8 +36,25 @@ router.post('/creatRoom',function(req,res){
     res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });
 
 
+  });
+
+router.post('/stream',function(req,res){
 
 
+    console.log("streaaaam");
+    try {
+        
+        const child =exec("./stream.sh");
+
+        child.stdout.pipe(process.stdout);
+        child.stderr.pipe(process.stderr);
+   
+        res.status(204).send();
+     }
+    catch(err){
+        res.status(400).send(err);
+    }
+    
   });
 
 router.get('/creatRoom',  (req,res)=>{

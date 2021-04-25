@@ -47,15 +47,10 @@ function login_streaming(){
 }
 
 
-function streaming_visio(){
-    if (streamingSection.className === "hidden"){
-        control.className = 'hidden';
-        streamingSection.className = '';
-    }
-    else if (control.className === "hidden"){
-        streamingSection.className = '';
-        control.className = '';
-    }
+function streaming_visio()  {
+
+    
+   
 }             // Transition Streaming->Visio BUG
 
 function goVisio(){

@@ -8,6 +8,8 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 
+const { exec } = require("child_process");
+
 //Import Routes
 
 const config = require('./config')
@@ -21,6 +23,8 @@ const Page_Request = require('../routes/Page_Request');
 
 const _ = require('lodash');
 const cors = require('cors');
+
+const shell = require('shelljs');
 
 
 dotenv.config();
@@ -40,6 +44,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cors({exposedHeaders: '*'}));
+
+
 
 
 app.routers = routers(app);
