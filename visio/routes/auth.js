@@ -32,6 +32,7 @@ router.post('/register',  async (req,res)=>{
     });
     try{
         const savedUser =  await user.save();
+        res.redirect('/Home.html');
         //res.send({userId : user._id });
     }
     catch(err){
@@ -59,6 +60,7 @@ router.post('/login', async (req,res) => {
 
     // Create and assign Token 
     const token = jwt.sign({_id: user._id},process.env.Secret_Token);
+    res.redirect('/Home.html');
     //res.header('auth-token',token).send(token);
     //home_register()    //res.send('Logged in !');
 });
