@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="modules/mediasoupclient.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"></script>
@@ -42,7 +43,6 @@
 
 
     <!--                REGISTER SECTION                            -->
-    <form action="/register" method="post">    
     <div id="register" >
         <h1>Sign up</h1>
         <div class="textbox">
@@ -62,14 +62,12 @@
                 <i id="registerHide2" class="fa fa-eye-slash"></i>
             </span>
         </div>
-        <div class="textbox">
-            <input id='registerNameInput' value="" type="password" placeholder="Type Password again" />
-        </div>
+
         <div>
-            <button id='loginButton' onclick="home_register()">Submit</button>
+            <button id='loginButton' onclick="SignUp_Request(registerEmailInput.value,PseudoInput.value,registerPasswordInput.value)">Submit</button>
+
         </div>
     </div>
-    </form>
     <script type="text/javascript" src="frontScript.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
@@ -79,4 +77,9 @@
 
 <footer>
     <script src="index.js"></script>
+    <script>
+        if ( window.history.replaceState ) {
+          window.history.replaceState( null, null, window.location.href );
+        }
+        </script>
 </footer>²

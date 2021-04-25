@@ -262,7 +262,7 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect', () => {
-        console.log(`---disconnect--- name: ${roomList.get(socket.room_id) && roomList.get(socket.room_id).getPeers().get(socket.id).name}`)
+        //console.log(`---disconnect--- name: ${roomList.get(socket.room_id) && roomList.get(socket.room_id).getPeers().get(socket.id).name}`)
         if (!socket.room_id) return
         roomList.get(socket.room_id).removePeer(socket.id)
     })

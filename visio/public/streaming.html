@@ -43,16 +43,64 @@
     
     <!--                Streaming SECTION                           -->
     
-    <div id="streamingSection"  >
-
-        <h1>HLS Player</h1>
-		<video id="player" class="video-js vjs-default-skin" width="720" controls preload="auto">
-			<source src= "http://localhost:8080/hls/test.m3u8" type="application/x-mpegURL" />
-		</video>
-		<script>
-			var player = videojs('#player');
-		</script>
+    <!--                Streaming SECTION                           -->
+    
+    <div id="streamingSection">
+        <div id="StreamDiv">
+            <div id="videoStreming">
+		        <video id="player" class="video-js vjs-default-skin" width="720" controls preload="auto">
+		    	    <source src= "http://localhost:8080/hls/test.m3u8" type="application/x-mpegURL" />
+		        </video>
+		        <script>
+		    	    var player = videojs('#player');
+		        </script>
+            </div>
             
+            <div id="ParticipantsStreaming" class="hidden">
+                <div class="chat_header">
+                    <p>Participants</p>
+                </div>
+            </div>
+        
+            <div id="ChatStreaming" class="hidden">
+                <div class="chat_header">
+                    <p>Chat</p>
+                    <ul id="conteneurMessage"></ul>
+                </div>
+                <!--<form action="" id="chatForm" onsubmit="rc.sendChat();return false"> 
+                onclick="joinRoom(nameInput.value, roomidInput.value)"-->
+                <div id="chat_message">
+                    <input id="chat_input" type="text" placeholder="Type message here"/>
+                </div>
+            </div>
+            
+        </div>
+        <div id="StreamingButtons">
+            <div class="buttons_main">
+                <a href="Visio.html">
+                    <div id="passageStreamingVisio" onclick="joinRoom(nameInput.value, roomidInput.value)">
+                        <i class="fas fa-video"></i><p>Go Visio</p>
+                    </div>
+                </a>
+            </div>
+            <div class="buttons_deco">
+                <div>
+                    <i class="fas fa-users" onclick="participantStreamingHide()"></i><p>Participants</p>
+                </div>
+                <div>
+                    <i class="fas fa-comment-alt" onclick="chatStreamingHide()"></i><p>Chat</p>
+                </div>
+            </div>
+            <div>
+                <a href="Home.html">
+                <div>
+                    <div>
+                        <i class="fas fa-door-open"></i><p>Exit</p>
+                    </div>
+                </div>
+                </a>
+            </div>   
+        </div>
     </div>
     
  

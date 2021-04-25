@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="modules/mediasoupclient.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"></script>
@@ -40,7 +41,6 @@
     </nav>
     
     <!--                HOME SECITION                               -->
-    <form action="/login" method="post">
     <div id="home">
         <h1>Login</h1>
         <div class="textbox">
@@ -57,16 +57,16 @@
             </span>
         </div>
         <div>
-            <button id='homeButton' onclick="   ">Login</button>
+            <button id='homeButton' onclick="logIn_Request(homeEmailInput.value,homePasswordInput.value)">Login</button>
         </div>
         <div id="noAccount" onclick="home_register">
             <button><a href="Home.html">Hack</a></button>
     
-            <p>No account ? <span onclick="O_Register()"> Register</span>  </p>
+            <p>No account ? <span > <a href="Register.html""> Register</a></span>  </p>
+
 
         </div>
     </div>
-    </form>
 
     
     <script type="text/javascript" src="frontScript.js"></script>
@@ -78,6 +78,11 @@
 
 <footer>
     <script src="index.js"></script>
+    <script>
+        if ( window.history.replaceState ) {
+          window.history.replaceState( null, null, window.location.href );
+        }
+        </script>
     
 </footer>
 

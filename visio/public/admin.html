@@ -1,7 +1,6 @@
 <html>
 
 <head>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="modules/mediasoupclient.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"></script>
@@ -76,15 +75,8 @@
                     <i class="fas fa-desktop"></i><p>Stop Sharing</p>
                 </div>
             </div>
-
-            <div id="buttons_deco">
-                <form action="/stream" method="post">
-                <div id="passageVisioStreaming" >
-                    <button class="fab fa-twitch"></button><p>Go Streaming</p>
-                </div>
-                </form>
-                
-                <div id="controlePassage" class='hidden'>
+            <div class="buttons_deco">
+                <div id="controlePassage">
                     <i class="fas fa-user-check" onclick="ParticipantControlHide()"></i><p>Control</p>
                 </div>
                 <div>
@@ -94,9 +86,11 @@
                     <i class="fas fa-comment-alt" onclick="ChatHide()"></i><p>Chat</p>
                 </div>
             </div>
+            <form action="/exitRoom" method="post">
                 <div id='exitButton' type="submit"  onclick="exitRoom(),rc.exit()">
                    <button type="submit"><i class="fas fa-door-open"></i><p>Exit</p></button>
                 </div>
+            </form>
         </div>
         <!--<br />-->
         <div id="chat">
@@ -138,7 +132,6 @@
     
     
     <script type="text/javascript" src="frontScript.js"></script>
-    <script type="text/javascript" src="stream.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
 </body>
@@ -149,8 +142,6 @@
     <script src="index.js"></script>
     <script type="text/javascript">
         // Mon code Javascript
-
-
         var inRoom = localStorage.getItem('inRoom');
         console.log(inRoom)
 
