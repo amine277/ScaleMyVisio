@@ -19,7 +19,64 @@ a:hover {
 
 
 /*                                  NAVBAR SECTION                              */
-
+#btn {
+    background: #222;
+    height: 10px;
+    display: flex;
+    min-width: 150px;
+    border: none;
+    width: 250px;
+    position: absolute;
+    top: 70%;
+    left: 40%;
+    border-radius: 10px;
+    color: #eee;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    transition: 1s;
+    margin-left: auto;
+    margin-right: auto;
+    -webkit-tap-highlight-color: transparent;
+    clear: both;
+    justify-content: center;
+    cursor: pointer;
+    padding-top: 2px;
+  }
+  
+  #btn #circle {
+    width: 5px;
+    height: 5px;
+    background: transparent;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    overflow: hidden;
+    transition: 700ms;
+  }
+  
+  .noselect {
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+  }
+  
+  #btn:hover {
+    background: transparent;
+  }
+  
+  #btn:hover #circle {
+    height: 30px;
+    width: 150px;
+    left: auto;
+    border-radius: 0;
+    position: center;
+    
+    border-bottom: 2px solid #4caf50;
+  }
 
 nav {
     width: 100%;
