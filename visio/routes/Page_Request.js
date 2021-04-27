@@ -7,6 +7,7 @@ const { spawn } = require('child_process');
 
 
 const User = require('../src/User');
+const Room = require('../src/Rooms');
 
 
 //const { joinRoom } = require('../public/index');
@@ -15,18 +16,21 @@ const User = require('../src/User');
 
 function data_roomCreated(user,RoomId){
 
-    
-
 
 }
 
 
 router.post('/ChooseStream', async function(req,res){
     
+    const rooms =await Room.find({"streamed": 1},{"name": 1} );
+    console.log(rooms);
+   // const rooms=cursor.toArray()
+    //res.send({rooms})
 
+    
 
-
-
+   //console.log(rooms);
+   
   });
 
 router.post('/infoRequest', async function(req,res){
@@ -49,46 +53,59 @@ router.post('/exitRoom',function(req,res){
 
 router.post('/creatRoom', async function(req,res){
     var user_name = req.body.name;
-    var roomId = req.body.roomId;
+    var roomName = req.body.roomId;
     var Id = req.body.Id;
 
+
+    console.log(Id);     
     const user = await User.findOne({_id:Id})
-    user.room = roomId;
+    user.room = roomName;
     user.role = 1;
 
-    //const user = await User.findOne({_id:Id})
-    //user.room=roomId;
-    //console.log(user.room);
-    //joinRoom("yahya", "11");
-  /*  var inputValue = req.body.redirect;
-    if (inputValue == "Join Visioconf"){
-        res.sendFile('Visio.html', { root: path.join(dirname, '../public') });}
-    else if (inputValue == "Join Streaming"){
-        res.sendFile('streaming.html', { root: path.join(dirname, '../public') });}
-    else if (inputValue == "CreateRoom"){
-        res.sendFile('admin.html', { root: path.join(dirname, '../public') });}
-    else {
-        res.sendFile('Home.html', { root: path.join(dirname, '../public') });
-*/
+    const room = new Room({
+        admin : Id,
+        name : roomName,
+
+        
+    });
+
     try{
+
+        room.name = roomName;
+        room.participant.push(Id);
+        const savedUser =  await room.save();
         res.send({value:true})
+
+        //res.send({value:true,Id:user._id});
     }
     catch(err){
         res.send(err);
     }
+   
+   
+
+       
+
   });
 
-router.post('/stream',function(req,res){
+router.post('/stream',async function(req,res){
 
 
-    console.log("streaaaam");
+    //console.log("streaaaam");
     try {
-        
+        const room = await Room.findOne({name:req.body.Room})
+        room.streamed = 1;
+
+
         const child =exec("./stream.sh");
 
         child.stdout.pipe(process.stdout);
         child.stderr.pipe(process.stderr);
-   
+
+
+        
+
+  
         res.status(204).send();
      }
     catch(err){
@@ -96,6 +113,7 @@ router.post('/stream',function(req,res){
     }
     
   });
+
 
 router.get('/LogIn',  (req,res)=>{
     try{    
@@ -106,7 +124,14 @@ router.get('/LogIn',  (req,res)=>{
     }
 });
 
-
+router.get('/ChooseStream',  (req,res)=>{
+    try{    
+        res.sendFile('ChooseStream.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
 
 router.get('/Register',  (req,res)=>{
     try{    
@@ -135,7 +160,14 @@ router.get('/home',  (req,res)=>{
     }
 });
 
-
+router.get('/index',  (req,res)=>{
+    try{    
+        res.sendFile('index.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
 router.get('/visio',  (req,res)=>{
     try{    
         res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });

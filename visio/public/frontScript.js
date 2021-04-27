@@ -1,5 +1,20 @@
 /*                   Redirection de fichiers front                      */
 
+function IsLogedIn(){
+    var Id = localStorage.getItem('Id');
+    if(!Id){
+        window.location.pathname = '/index'
+
+    }
+}
+
+function IsLogedOut(){
+    var Id = localStorage.getItem('Id');
+    if(Id){
+        window.location.pathname = '/Home'
+
+    }
+}
 
 function SignUp_Request(email,pseudo,pwd){
 
@@ -21,23 +36,42 @@ function SignUp_Request(email,pseudo,pwd){
     
 }
 
-function login_streaming() {
+ function login_streaming() {
 
     axios.post('/ChooseStream', {
-        Id: localStorage.setItem('Id')   
-      })
-      .then((response) => {
-          console.log(response.data)
-          if(response.data.value){
-            localStorage.setItem('Id',response.data.Id)
-            window.location.pathname = '/Home'
-        }
-        
-      }, (error) => {
+        Id: localStorage.getItem('Id')   
+      }).then((response) => {
+        const rooms =response.data.rooms;
+        console.log(rooms);
+        //rooms.forEach(element => console.log(element));
+        var streams = document.getElementById('streams');
+        var list = document.getElementById('list');
+        rooms.forEach(element => {
+        var room = document.createElement('li');
+        room.innerHTML='<p><a href="#">'+element+'</a></p>';
+        list.appendChild(room);})
+
+    }, (error) => {
         console.log(error);
       });
-    
 }
+
+function StartStream() {
+
+    axios.post('/stream', {
+
+        Id: localStorage.getItem('Id'),
+        Room :  localStorage.getItem('RoomId')
+
+      }).then((response) => {
+       
+
+    }, (error) => {
+        console.log(error);
+      });
+}
+
+ 
 
 function logIn_Request(email,pwd){
 
@@ -48,6 +82,7 @@ function logIn_Request(email,pwd){
       .then((response) => {
           console.log(response.data)
           if(response.data.value){
+            console.log(response.data.Id)
             localStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
         }

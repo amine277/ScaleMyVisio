@@ -9,7 +9,10 @@ body {
 }
 
 a {
-    color: inherit;
+    color: rgb(226,226,226);
+    font-size: 28px;
+    margin-left: 30px;
+    transform: translateY(26%);
 }
 
 a:hover {
@@ -34,6 +37,12 @@ nav p {
     margin-left: 30px;
     transform: translateY(26%);
 }
+/*nav a {
+    color: rgb(226,226,226);
+    font-size: 28px;
+    margin-left: 30px;
+    transform: translateY(26%);
+}*/
 
 
 /*                                  LOGIN SECTION                               */

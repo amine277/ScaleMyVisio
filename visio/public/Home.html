@@ -7,7 +7,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="RoomClient.js"></script>
-    
+    <script type="text/javascript" src="frontScript.js"></script>
+    <script type="text/javascript">
+        IsLogedIn();
+    </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
@@ -58,8 +61,8 @@
             <div id="startButtons">
 
                 <button id='joinButton' name="redirect" onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
-                <button id='joinStreaming' name="redirect" onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
-                <button id='createButton' name="redirect" onclick="creatRoom(nameInput.value,roomidInput.value,55);Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
+                <button id='joinStreaming' name="redirect" onclick=" window.location.pathname = '/streaming'"> Join Streaming</button>
+                <button id='createButton' name="redirect" onclick="creatRoom(nameInput.value,roomidInput.value,localStorage.getItem('Id'));Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
                 
             </div>
         </div>
@@ -71,7 +74,6 @@
     
     
     
-    <script type="text/javascript" src="frontScript.js"></script>
     <script type="text/javascript">
 
 
