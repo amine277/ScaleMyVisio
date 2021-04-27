@@ -51,6 +51,30 @@ router.post('/exitRoom',function(req,res){
     res.send({value:true});
   });
 
+
+  router.post('/exit',function(req,res){
+
+    //console.log("User exited")
+    if (typeof window !== 'undefined') {
+        // do your stuff with sessionStorage
+        sessionStorage.setItem('user', "qalwa");
+        console.log(sessionStorage.getItem('user'))
+        user.Id = 0;
+    }
+    
+    //console.log(user_name)
+   // console.log(roomId)
+    
+
+    //joinRoom("yahya", "11");
+    res.sendFile('index.html', { root: path.join(__dirname, '../public') });
+
+
+
+
+});
+
+
 router.post('/creatRoom', async function(req,res){
     var user_name = req.body.name;
     var roomName = req.body.roomId;

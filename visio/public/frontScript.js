@@ -16,6 +16,7 @@ function IsLogedOut(){
     }
 }
 
+
 function SignUp_Request(email,pseudo,pwd){
 
     axios.post('/SignUp', {
@@ -160,6 +161,20 @@ function exitRoom(){
 
 
 }
+
+// EXIT FUNCTION
+function exit(){
+    localStorage.clear()
+    window.location.pathname = '/index'
+
+    /*fetch('/exit', {
+        method: 'POST',
+    })
+    .then(res => res.text())
+    .then(html => console.log(html))
+    .catch(err => console.error(err));*/
+}
+
 
 function Updateinfo(email){
     localStorage.setItem('email',email)
