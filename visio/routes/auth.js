@@ -33,11 +33,10 @@ router.post('/SignUp',  async (req,res)=>{
         password : hashedPassword
     });
     try{
-        console.log('ysa')
 
         const savedUser =  await user.save();
 
-        res.send({value:true})
+        res.send({value:true,Id:user._id})
         //res.send({value:true,Id:user._id});
     }
     catch(err){

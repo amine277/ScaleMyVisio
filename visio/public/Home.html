@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="modules/mediasoupclient.min.js"></script>
@@ -60,7 +61,7 @@
             </div>
             <div id="startButtons">
 
-                <button id='joinButton' name="redirect" onclick="joinRoom(nameInput.value, roomidInput.value)">Join Visioconf</button>
+                <button id='joinButton' name="redirect" onclick="JoinRoom(nameInput.value,roomidInput.value,localStorage.getItem('Id'));Room_update_loc(nameInput.value,roomidInput.value)">Join Visioconf</button>
                 <button id='joinStreaming' name="redirect" onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
                 <button id='createButton' name="redirect" onclick="creatRoom(nameInput.value,roomidInput.value,localStorage.getItem('Id'));Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
                 

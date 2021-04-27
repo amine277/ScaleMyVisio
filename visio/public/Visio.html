@@ -1,6 +1,7 @@
 <html>
 
 <head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="modules/mediasoupclient.min.js"></script>
@@ -91,7 +92,7 @@
                     <i class="fas fa-user-check" onclick="ParticipantControlHide()"></i><p>Control</p>
                 </div>
                 <div>
-                    <i class="fas fa-users" onclick="ParticipantHide()"></i><p>Participant</p>
+                    <i class="fas fa-users" onclick="getRoomClientList();ParticipantHide()"></i><p>Participant</p>
                 </div>
                 <div>
                     <i class="fas fa-comment-alt" onclick="ChatHide()"></i><p>Chat</p>

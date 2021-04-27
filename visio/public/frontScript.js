@@ -1,5 +1,27 @@
 /*                   Redirection de fichiers front                      */
 
+function getRoomClientList(){
+        axios.post('/RoomClientList', {
+            Id: localStorage.getItem('Id'),
+            roomId: localStorage.getItem('RoomId')
+
+          })
+          .then((response) => {
+            const list =response.data.list;
+       
+            let fen = document.getElementById('ParticipantList');
+            fen.innerHTML = "";
+            list.forEach(element => {
+            let part = document.createElement('li');
+            part.innerText = element.username;
+            fen.appendChild(part)
+        })
+    
+        }, (error) => {
+          console.log(error);
+        });
+}
+
 function IsLogedIn(){
     var Id = localStorage.getItem('Id');
     if(!Id){
@@ -24,12 +46,16 @@ function SignUp_Request(email,pseudo,pwd){
         password: pwd
       })
       .then((response) => {
-          console.log(response.data)
           if(response.data.value){
             localStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
         }
-        
+        else{
+            swal({
+                title: response.data,
+                icon: "error",
+              });
+          }
       }, (error) => {
         console.log(error);
       });
@@ -43,16 +69,49 @@ function logIn_Request(email,pwd){
         password: pwd,
       })
       .then((response) => {
-          console.log(response.data)
           if(response.data.value){
             localStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
-        }
+          }
+
+          else{
+            swal({
+                title: response.data,
+                icon: "error",
+              });
+          }
         
       }, (error) => {
         console.log(error);
       });
     
+}
+
+function JoinRoom(name,RoomId,Id){
+
+    console.log('whyy2')
+
+    axios.post('/joinRoom', {
+        roomId: RoomId,
+        name: name,
+        Id: Id
+      })
+      .then((response) => {
+        console.log(response);
+
+          if(response.data.value){
+        window.location.pathname = '/Visio'
+    }
+        else{
+            swal({
+                title: response.data.message,
+                icon: "error",
+              });
+        }
+      }, (error) => {
+        console.log(error);
+      });
+
 }
 
 

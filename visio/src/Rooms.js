@@ -7,7 +7,7 @@ const roomShema = new mongoose.Schema({
     name:{
         type: String,
         required: true,
-        min: 3,
+        min: 1,
         max: 255
     },
 

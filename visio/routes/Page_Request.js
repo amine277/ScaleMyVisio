@@ -21,21 +21,43 @@ function data_roomCreated(user,RoomId){
 
 }
 
-router.post('/infoRequest', async function(req,res){
+
+
+router.post('/RoomClientList', async function(req,res){
     
 
-    console.log("infoRequest")
-    const user = await User.findOne({email:req.body.email})
+    console.log("RoomClientList")
 
-   // console.log(roomId)
+    var Id = req.body.Id;
+    var roomId = req.body.roomId;
+    console.log(roomId)
+
+    const room = await Room.findOne({name:roomId})
+    var list = room.participant
+    console.log(list)
 
 
-    res.send(user._id)
+    try{
 
+        res.send({value:true,list:list})
+    }
+    catch(err){
+        res.send(err);
+    }
 
 
 
   });
+
+
+router.post('/infoRequest', async function(req,res){
+    
+    console.log("infoRequest")
+    const user = await User.findOne({email:req.body.email})
+
+    res.send(user._id)
+  });
+
   
 router.post('/exitRoom',function(req,res){
      
@@ -49,50 +71,63 @@ router.post('/creatRoom', async function(req,res){
     var roomName = req.body.roomId;
     var Id = req.body.Id;
      
-    const user = await User.findOne({_id:Id})
-    user.room = roomName;
-    user.role = 1;
-
     const room = new Room({
-        admin : Id,
-        name : roomName,
-
-        
+            admin : Id,
+            name : roomName,           
     });
 
+        try{
+            const user = await User.findOne({_id:Id})
+            user.room = roomName;
+            user.role = 1;
+            const savedUser =  await user.save();
 
-
-    try{
-
-        room.name = roomName;
-        room.participant.push(Id);
-        const savedUser =  await room.save();
-        res.send({value:true})
-
-        //res.send({value:true,Id:user._id});
+            room.participant.push({Id:Id,username:user_name});
+            const savedRoom =  await room.save();
+            res.send({value:true})
+        }
+        catch(err){
+            res.send(err);
     }
-    catch(err){
-        res.send(err);
+
+
+  });
+
+
+  router.post('/joinRoom', async function(req,res){
+    var user_name = req.body.name;
+    var roomName = req.body.roomId;
+    var Id = req.body.Id;
+
+
+    const room = await Room.findOne({name:roomName})
+
+    if(!room){
+
+
+        try{
+            console.log("saba")
+            res.send({value:false,message:"Room Not Found"});
+        }
+        catch(err){
+            res.send(err);
+    }}
+    else{
+        try{
+            const user = await User.findOne({_id:Id})
+            user.room = roomName;
+            user.role = 2;
+            const savedUser =  await user.save();
+
+            room.participant.push({Id:Id,username:user_name});
+            const savedRoom =  await room.save();
+            res.send({value:true})
+        }
+        catch(err){
+            res.send(err);
+        }
     }
-    //const user = await User.findOne({_id:Id})
-    //user.room=roomId;
-    //console.log(user.room);
-    //joinRoom("yahya", "11");
-  /*  var inputValue = req.body.redirect;
-    if (inputValue == "Join Visioconf"){
-        res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });}
-    else if (inputValue == "Join Streaming"){
-        res.sendFile('streaming.html', { root: path.join(__dirname, '../public') });}
-    else if (inputValue == "CreateRoom"){
-        res.sendFile('admin.html', { root: path.join(__dirname, '../public') });}
-    else {
-        res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
-<<<<<<< HEAD
-*/
-
-
-
-
+    
   });
 
 router.post('/stream',function(req,res){

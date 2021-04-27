@@ -20,7 +20,7 @@ const userShema = new mongoose.Schema({
         max: 20
     },
     room: {
-        type: Number,
+        type: String,
         default : 0
     },
     role: {
