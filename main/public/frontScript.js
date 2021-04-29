@@ -1,9 +1,14 @@
 /*                   Redirection de fichiers front                      */
 
+function exit(){
+    sessionStorage.clear()
+    window.location.pathname = '/index'
+}
+
 function getRoomClientList(){
         axios.post('/RoomClientList', {
-            Id: localStorage.getItem('Id'),
-            roomId: localStorage.getItem('RoomId')
+            Id: sessionStorage.getItem('Id'),
+            roomId: sessionStorage.getItem('RoomId')
 
           })
           .then((response) => {
@@ -23,7 +28,7 @@ function getRoomClientList(){
 }
 
 function IsLogedIn(){
-    var Id = localStorage.getItem('Id');
+    var Id = sessionStorage.getItem('Id');
     if(!Id){
         window.location.pathname = '/index'
 
@@ -31,7 +36,7 @@ function IsLogedIn(){
 }
 
 function IsLogedOut(){
-    var Id = localStorage.getItem('Id');
+    var Id = sessionStorage.getItem('Id');
     if(Id){
         window.location.pathname = '/Home'
 
@@ -47,7 +52,7 @@ function SignUp_Request(email,pseudo,pwd){
       })
       .then((response) => {
           if(response.data.value){
-            localStorage.setItem('Id',response.data.Id)
+            sessionStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
         }
         else{
@@ -70,7 +75,7 @@ function logIn_Request(email,pwd){
       })
       .then((response) => {
           if(response.data.value){
-            localStorage.setItem('Id',response.data.Id)
+            sessionStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
           }
 
@@ -128,6 +133,12 @@ function creatRoom(name,RoomId,Id){
 
           if(response.data.value){
         window.location.pathname = '/Visio'}
+          else{
+            swal({
+                title: response.data.message,
+                icon: "error",
+              });
+          }
         
       }, (error) => {
         console.log(error);
@@ -151,7 +162,7 @@ function SendRequest(payload,url){
     const Id = await rawResponse.json();
   
    // console.log(Id);
-    localStorage.setItem('Id',Id)
+   sessionStorage.setItem('Id',Id)
 
   })();
 
@@ -159,20 +170,20 @@ function SendRequest(payload,url){
 }
 
 function Room_update_loc(name,RoomId){
-    localStorage.setItem('name',name)
-    localStorage.setItem('RoomId',RoomId)
+    sessionStorage.setItem('name',name)
+    sessionStorage.setItem('RoomId',RoomId)
 }
 
 function exitRoom(){
     axios.post('/exitRoom', {
-        Id: localStorage.getItem('Id')
+        Id: sessionStorage.getItem('Id')
       })
 
       .then((response) => {
           if(response.data.value){
-            localStorage.removeItem('name')
-            localStorage.removeItem('RoomId')
-            localStorage.setItem('inRoom',0)
+            sessionStorage.removeItem('name')
+            sessionStorage.removeItem('RoomId')
+            sessionStorage.setItem('inRoom',0)
             window.location.pathname = '/Home'}
         
       }, (error) => {
@@ -183,7 +194,7 @@ function exitRoom(){
 }
 
 function Updateinfo(email){
-    localStorage.setItem('email',email)
+    sessionStorage.setItem('email',email)
 
 }
 

@@ -76,10 +76,7 @@ router.post('/exitRoom',function(req,res){
         console.log(sessionStorage.getItem('user'))
         user.Id = 0;
     }
-    
-    //console.log(user_name)
-   // console.log(roomId)
-    
+
 
     //joinRoom("yahya", "11");
     res.sendFile('index.html', { root: path.join(__dirname, '../public') });
@@ -94,7 +91,12 @@ router.post('/creatRoom', async function(req,res){
     var user_name = req.body.name;
     var roomName = req.body.roomId;
     var Id = req.body.Id;
-     
+    
+
+    const roomexist = await Room.findOne({name:roomName})
+
+    if (!roomexist){
+
     const room = new Room({
             admin : Id,
             name : roomName,           
@@ -113,7 +115,11 @@ router.post('/creatRoom', async function(req,res){
         catch(err){
             res.send(err);
     }
+    }
+    else{
+        res.send({value:false,message:"This room name already exist!"})
 
+    }
 
   });
 

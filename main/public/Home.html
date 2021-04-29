@@ -61,9 +61,9 @@
             </div>
             <div id="startButtons">
 
-                <button id='joinButton' name="redirect" onclick="JoinRoom(nameInput.value,roomidInput.value,localStorage.getItem('Id'));Room_update_loc(nameInput.value,roomidInput.value)">Join Visioconf</button>
+                <button id='joinButton' name="redirect" onclick="JoinRoom(nameInput.value,roomidInput.value,sessionStorage.getItem('Id'));Room_update_loc(nameInput.value,roomidInput.value)">Join Visioconf</button>
                 <button id='joinStreaming' name="redirect" onclick="login_streaming()"> <a href="streaming.html">Join Streaming</a></button>
-                <button id='createButton' name="redirect" onclick="creatRoom(nameInput.value,roomidInput.value,localStorage.getItem('Id'));Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
+                <button id='createButton' name="redirect" onclick="creatRoom(nameInput.value,roomidInput.value,sessionStorage.getItem('Id'));Room_update_loc(nameInput.value,roomidInput.value)" type="submit">Create Room</button>
                 
             </div>
         </div>
@@ -87,18 +87,18 @@
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
         // Mon code Javascript
-        var email = localStorage.getItem('email');
+        var email = sessionStorage.getItem('email');
         var payload = {
         email: email
         };
 
-        var Id = localStorage.getItem('Id');
+        var Id = sessionStorage.getItem('Id');
         if(!Id){   
         SendRequest(payload,"/infoRequest");}
 
-        //var inRoom = localStorage.getItem('inRoom');
+        //var inRoom = sessionStorage.getItem('inRoom');
         
-        localStorage.setItem('inRoom',0)
+        sessionStorage.setItem('inRoom',0)
       </script>
 
 </body>

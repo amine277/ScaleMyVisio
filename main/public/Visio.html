@@ -11,6 +11,9 @@
     <script type="text/javascript" src="frontScript.js"></script>
     <script type="text/javascript">
         IsLogedIn();
+        /*window.onbeforeunload = function() {
+        return "Leaving this page will reset the wizard";
+        };*/
     </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
@@ -154,14 +157,14 @@
         // Mon code Javascript
 
 
-        var inRoom = localStorage.getItem('inRoom');
+        var inRoom = sessionStorage.getItem('inRoom');
         console.log(inRoom)
 
         if(inRoom == 0 ){
             console.log("yaa")
-        var name = localStorage.getItem('name');
-        var RoomId = localStorage.getItem('RoomId');
-        localStorage.setItem('inRoom',1);
+        var name = sessionStorage.getItem('name');
+        var RoomId = sessionStorage.getItem('RoomId');
+        sessionStorage.setItem('inRoom',1);
         joinRoom(name,RoomId);}
 
       </script>
