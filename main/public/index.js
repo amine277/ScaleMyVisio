@@ -36,18 +36,13 @@ function joinRoom(name, room_id) {
 /*  var data = new FormData();
 data.append('name', 'person');
 data.append('RoomId', 5);
-
-
 var xhr = new XMLHttpRequest();
 xhr.open('POST', '/creatRoom', true);
 xhr.onload = function () {
     // do something to response
     if(this.responseText){
       console.log("1")
-
-
         res.sendFile('Register.html', { root: __dirname });
-
       }
     }
 };
@@ -78,6 +73,22 @@ function reveal(elem) {
 
 
 function addListeners() {
+    
+/*    let text = $('input')
+
+$('html').keydown((e) => {
+    if (e.which == 13 && text.val().length !== 0){
+        console.log("On index.js: " + text.val())
+        socket.emit('message',text.val());
+    }
+})
+
+socket.on('serverMessage',(msg)=> {
+        let conteneur = document.getElementById('conteneurMessage');
+        let message = document.createElement('li');
+        message.innerText = name + " " +msg;
+        conteneur.appendChild(message);
+        })*/
 
 
   rc.on(RoomClient.EVENTS.stopAudio, () => {
@@ -121,3 +132,20 @@ navigator.mediaDevices.enumerateDevices().then(devices =>
     el.appendChild(option)
   })
 )}
+
+let text = $('input')
+
+$('html').keydown((e) => {
+    if (e.which == 13 && text.val().length !== 0){
+        console.log("On index.js: " + text.val())
+        socket.emit('message',text.val());
+    }
+})
+
+socket.on('serverMessage',(msg)=> {
+        let conteneur = document.getElementById('conteneurMessage');
+        let message = document.createElement('li');
+        message.innerText = msg;
+        conteneur.appendChild(message);
+        })
+        
