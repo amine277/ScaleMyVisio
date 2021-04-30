@@ -39,13 +39,15 @@ function SignUp_Request(email,pseudo,pwd){
 
  function login_streaming() {
 
+    
+
     axios.post('/ChooseStream', {
         Id: localStorage.getItem('Id')   
       }).then((response) => {
-        const rooms =response.data.rooms;
+        const rooms =response.data;
         console.log(rooms);
         //rooms.forEach(element => console.log(element));
-        var streams = document.getElementById('streams');
+        //var streams = document.getElementById('streams');
         var list = document.getElementById('list');
         rooms.forEach(element => {
         var room = document.createElement('li');

@@ -22,14 +22,17 @@ function data_roomCreated(user,RoomId){
 
 router.post('/ChooseStream', async function(req,res){
     
-    const rooms =await Room.find({"streamed": 1},{"name": 1} );
-    console.log(rooms);
-   // const rooms=cursor.toArray()
-    //res.send({rooms})
-
+    const rooms =await Room.find({"streamed": 1},'name');
     
+   //const rooms=cursor.toArray()
+    var liste=[];
+    rooms.forEach(element => {
 
-   //console.log(rooms);
+        liste.push(element.name);
+        
+    });
+    console.log(liste);
+    res.send(liste)
    
   });
 
@@ -38,8 +41,7 @@ router.post('/infoRequest', async function(req,res){
 
     console.log("infoRequest")
     const user = await User.findOne({email:req.body.email})
-
-   
+  
     res.send(user._id)
 
   });
@@ -119,6 +121,7 @@ router.post('/stream',async function(req,res){
     try {
         const room = await Room.findOne({name:req.body.Room})
         room.streamed = 1;
+        await room.save();
 
 
         const child =exec("./stream.sh");
