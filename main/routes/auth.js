@@ -34,11 +34,10 @@ router.post('/SignUp',  async (req,res)=>{
     });
     
     try{
-        console.log('ysa')
 
         const savedUser =  await user.save();
 
-        res.send({value:true,Id:user._id});
+        res.send({value:true,Id:user._id})
         //res.send({value:true,Id:user._id});
     }
     catch(err){

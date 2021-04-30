@@ -1,7 +1,34 @@
 /*                   Redirection de fichiers front                      */
 
+function exit(){
+    sessionStorage.clear()
+    window.location.pathname = '/index'
+}
+
+function getRoomClientList(){
+        axios.post('/RoomClientList', {
+            Id: sessionStorage.getItem('Id'),
+            roomId: sessionStorage.getItem('RoomId')
+
+          })
+          .then((response) => {
+            const list =response.data.list;
+       
+            let fen = document.getElementById('ParticipantList');
+            fen.innerHTML = "";
+            list.forEach(element => {
+            let part = document.createElement('li');
+            part.innerText = element.username;
+            fen.appendChild(part)
+        })
+    
+        }, (error) => {
+          console.log(error);
+        });
+}
+
 function IsLogedIn(){
-    var Id = localStorage.getItem('Id');
+    var Id = sessionStorage.getItem('Id');
     if(!Id){
         window.location.pathname = '/index'
 
@@ -9,13 +36,12 @@ function IsLogedIn(){
 }
 
 function IsLogedOut(){
-    var Id = localStorage.getItem('Id');
+    var Id = sessionStorage.getItem('Id');
     if(Id){
         window.location.pathname = '/Home'
 
     }
 }
-
 
 function SignUp_Request(email,pseudo,pwd){
 
@@ -25,12 +51,16 @@ function SignUp_Request(email,pseudo,pwd){
         password: pwd
       })
       .then((response) => {
-          console.log(response.data)
           if(response.data.value){
-            localStorage.setItem('Id',response.data.Id)
+            sessionStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
         }
-        
+        else{
+            swal({
+                title: response.data,
+                icon: "error",
+              });
+          }
       }, (error) => {
         console.log(error);
       });
@@ -83,17 +113,49 @@ function logIn_Request(email,pwd){
         password: pwd,
       })
       .then((response) => {
-          console.log(response.data)
           if(response.data.value){
-            console.log(response.data.Id)
-            localStorage.setItem('Id',response.data.Id)
+            sessionStorage.setItem('Id',response.data.Id)
             window.location.pathname = '/Home'
-        }
+          }
+
+          else{
+            swal({
+                title: response.data,
+                icon: "error",
+              });
+          }
         
       }, (error) => {
         console.log(error);
       });
     
+}
+
+function JoinRoom(name,RoomId,Id){
+
+    console.log('whyy2')
+
+    axios.post('/joinRoom', {
+        roomId: RoomId,
+        name: name,
+        Id: Id
+      })
+      .then((response) => {
+        console.log(response);
+
+          if(response.data.value){
+        window.location.pathname = '/Visio'
+    }
+        else{
+            swal({
+                title: response.data.message,
+                icon: "error",
+              });
+        }
+      }, (error) => {
+        console.log(error);
+      });
+
 }
 
 
@@ -110,6 +172,12 @@ function creatRoom(name,RoomId,Id){
 
           if(response.data.value){
         window.location.pathname = '/Visio'}
+          else{
+            swal({
+                title: response.data.message,
+                icon: "error",
+              });
+          }
         
       }, (error) => {
         console.log(error);
@@ -133,7 +201,7 @@ function SendRequest(payload,url){
     const Id = await rawResponse.json();
   
    // console.log(Id);
-    localStorage.setItem('Id',Id)
+   sessionStorage.setItem('Id',Id)
 
   })();
 
@@ -141,20 +209,20 @@ function SendRequest(payload,url){
 }
 
 function Room_update_loc(name,RoomId){
-    localStorage.setItem('name',name)
-    localStorage.setItem('RoomId',RoomId)
+    sessionStorage.setItem('name',name)
+    sessionStorage.setItem('RoomId',RoomId)
 }
 
 function exitRoom(){
     axios.post('/exitRoom', {
-        Id: localStorage.getItem('Id')
+        Id: sessionStorage.getItem('Id')
       })
 
       .then((response) => {
           if(response.data.value){
-            localStorage.removeItem('name')
-            localStorage.removeItem('RoomId')
-            localStorage.setItem('inRoom',0)
+            sessionStorage.removeItem('name')
+            sessionStorage.removeItem('RoomId')
+            sessionStorage.setItem('inRoom',0)
             window.location.pathname = '/Home'}
         
       }, (error) => {
@@ -164,22 +232,8 @@ function exitRoom(){
 
 }
 
-// EXIT FUNCTION
-function exit(){
-    localStorage.clear()
-    window.location.pathname = '/index'
-
-    /*fetch('/exit', {
-        method: 'POST',
-    })
-    .then(res => res.text())
-    .then(html => console.log(html))
-    .catch(err => console.error(err));*/
-}
-
-
 function Updateinfo(email){
-    localStorage.setItem('email',email)
+    sessionStorage.setItem('email',email)
 
 }
 

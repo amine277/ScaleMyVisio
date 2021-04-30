@@ -58,6 +58,7 @@ class RoomClient {
         part.innerText = this.name;
         this.localParticipant.appendChild(part)
 
+        
 
 
 
@@ -242,12 +243,13 @@ class RoomClient {
             }
         }.bind(this))
         
-        this.socket.on('addChat',(val) => {
+        /*this.socket.on('addChat',(val) => {
             let conteneur = document.getElementById('conteneurMessage');
             let message = document.createElement('li');
             message.innerText = this.name + ": " + val;
+            console.log(message)
             conteneur.appendChild(message);
-        })
+        })*/
 
         this.socket.on('disconnect', function () {
             this.exit(true)
