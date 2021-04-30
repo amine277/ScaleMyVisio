@@ -157,7 +157,7 @@ nav p {
     width: 430px;
 }
 
-#startButtons input {
+#startButtons button {
     width: 30%;
     background: none;
     border: 2px solid #4caf50;
