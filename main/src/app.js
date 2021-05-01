@@ -38,7 +38,10 @@ const options = {
 const httpsServer = https.createServer(options, app)
 const io = require('socket.io')(httpsServer)
 
-app.use(express.static(path.join(__dirname, '..', 'public')))
+app.set('view engine','ejs')
+app.set('views', path.join(__dirname, '../public/views'));
+app.use(express.static('public'))
+app.use(express.static(__dirname + '/css'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

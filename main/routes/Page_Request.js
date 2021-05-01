@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const path = require('path');
-
+const { v4 : uuidV4} = require('uuid');
 const shell = require('shelljs') ;
 const exec = require('child_process').exec;
 const { spawn } = require('child_process');
@@ -33,16 +33,18 @@ router.post('/RoomClientList', async function(req,res){
     console.log(roomId)
 
     const room = await Room.findOne({name:roomId})
-    var list = room.participant
-    console.log(list)
+    if(room){
+        var list = room.participant
+        console.log(list)
 
 
-    try{
+        try{
 
-        res.send({value:true,list:list})
-    }
-    catch(err){
-        res.send(err);
+            res.send({value:true,list:list})
+        }
+        catch(err){
+            res.send(err);
+        }
     }
 
 
@@ -68,18 +70,9 @@ router.post('/exitRoom',function(req,res){
 
 
   router.post('/exit',function(req,res){
-
-    //console.log("User exited")
-    if (typeof window !== 'undefined') {
-        // do your stuff with sessionStorage
-        sessionStorage.setItem('user', "qalwa");
-        console.log(sessionStorage.getItem('user'))
-        user.Id = 0;
-    }
-
+    //res.send({value:true});
 
     //joinRoom("yahya", "11");
-    res.sendFile('index.html', { root: path.join(__dirname, '../public') });
 
 
 
@@ -99,7 +92,8 @@ router.post('/creatRoom', async function(req,res){
 
     const room = new Room({
             admin : Id,
-            name : roomName,           
+            name : roomName,
+            url : uuidV4()           
     });
 
         try{
@@ -110,7 +104,7 @@ router.post('/creatRoom', async function(req,res){
 
             room.participant.push({Id:Id,username:user_name});
             const savedRoom =  await room.save();
-            res.send({value:true})
+            res.send({value:true,url:room.url})
         }
         catch(err){
             res.send(err);
@@ -136,7 +130,6 @@ router.post('/creatRoom', async function(req,res){
 
 
         try{
-            console.log("saba")
             res.send({value:false,message:"Room Not Found"});
         }
         catch(err){
@@ -151,7 +144,7 @@ router.post('/creatRoom', async function(req,res){
 
             room.participant.push({Id:Id,username:user_name});
             const savedRoom =  await room.save();
-            res.send({value:true})
+            res.send({value:true,url:room.url})
         }
         catch(err){
             res.send(err);
@@ -180,68 +173,40 @@ router.post('/stream',function(req,res){
   });
 
 
-router.get('/LogIn',  (req,res)=>{
-    try{    
-        res.sendFile('index.html', { root: path.join(__dirname, '../public') });
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
+
+
+
+
+router.get('/', function(req, res){
+    res.render('index')
+});
+
+router.get('/Home', function(req, res){
+    res.render('Home')
+});
+
+router.get('/room/:room',async function(req, res){
+    //var roomName = req.body.roomId;
+    //var Id = req.body.Id;
+
+    const room = await Room.findOne({url:req.params.room})
+
+    if(room){
+    res.render('Visio')}
+
+    else{
+        res.render('Home')}
+ 
+    
 });
 
 
-
-router.get('/Register',  (req,res)=>{
-    try{    
-        res.sendFile('Register.html', { root: path.join(__dirname, '../public') });
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
+router.get('/exit', function(req, res){
+    res.render('index')
 });
 
-router.get('/streaming',  (req,res)=>{
-    try{    
-        res.sendFile('streaming.html', { root: path.join(__dirname, '../public') });
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
-});
-
-router.get('/home',  (req,res)=>{
-    try{    
-        res.sendFile('Home.html', { root: path.join(__dirname, '../public') });
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
-});
-
-router.get('/index',  (req,res)=>{
-    try{    
-        res.sendFile('index.html', { root: path.join(__dirname, '../public') });
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
-});
-router.get('/visio',  (req,res)=>{
-    try{    
-        res.sendFile('Visio.html', { root: path.join(__dirname, '../public') });
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
-});
-
-router.get('/admin',  (req,res)=>{
-    try{    
-        res.sendFile('admin.html', { root: path.join(__dirname, '../public') });
-    }
-    catch(err){
-        res.status(400).send(err);
-    }
+router.get('/register', function(req, res){
+    res.render('Register')
 });
 
 

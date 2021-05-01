@@ -2,7 +2,19 @@
 
 function exit(){
     sessionStorage.clear()
-    window.location.pathname = '/index'
+    axios.post('/exit', {
+        Id: sessionStorage.getItem('Id'),
+
+      })
+      .then((response) => {
+
+
+    }, (error) => {
+      console.log(error);
+    });
+    window.location.pathname = '/'
+
+    
 }
 
 function getRoomClientList(){
@@ -30,7 +42,7 @@ function getRoomClientList(){
 function IsLogedIn(){
     var Id = sessionStorage.getItem('Id');
     if(!Id){
-        window.location.pathname = '/index'
+        window.location.pathname = '/'
 
     }
 }
@@ -105,8 +117,8 @@ function JoinRoom(name,RoomId,Id){
         console.log(response);
 
           if(response.data.value){
-        window.location.pathname = '/Visio'
-    }
+            window.location.pathname = `/room/${response.data.url}`
+        }
         else{
             swal({
                 title: response.data.message,
@@ -129,10 +141,9 @@ function creatRoom(name,RoomId,Id){
         Id: Id
       })
       .then((response) => {
-        console.log(response);
 
           if(response.data.value){
-        window.location.pathname = '/Visio'}
+        window.location.pathname = `/room/${response.data.url}`}
           else{
             swal({
                 title: response.data.message,
@@ -205,13 +216,8 @@ function home_login(){
 }
 
 function home_register(){
-    if (register.className === "hidden"){
-        home.className = 'hidden';
-        register.className = '';}
-    else if (home.className === "hidden"){
-        register.className = 'hidden';
-        home.className = '';  
-    }
+    window.location.pathname = '/register'
+
 }
 
 function adminInterface(){

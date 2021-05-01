@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const roomShema = new mongoose.Schema({
     admin:{
         type: String,
+    },  
+    url:{
+        type: String,
     },   
     name:{
         type: String,

@@ -21,7 +21,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
-    "ejs": "~2.6.1",
+    "ejs": "^2.6.2",
     "express": "^4.17.1",
     "http-errors": "~1.6.3",
     "httpolyglot": "^0.1.2",
@@ -36,7 +36,8 @@
     "protoo-client": "^4.0.4",
     "protoo-server": "^4.0.4",
     "shelljs": "^0.8.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
