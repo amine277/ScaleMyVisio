@@ -16,10 +16,26 @@ const Room = require('../src/Rooms');
 
 function data_roomCreated(user,RoomId){
 
-    
-
 
 }
+
+
+router.post('/ChooseStream', async function(req,res){
+    
+    const rooms =await Room.find({"streamed": 1},'name');
+    
+   //const rooms=cursor.toArray()
+    var liste=[];
+    rooms.forEach(element => {
+
+        liste.push(element.name);
+        
+    });
+    console.log(liste);
+    res.send(liste)
+   
+  });
+
 
 
 
@@ -128,6 +144,7 @@ router.post('/creatRoom', async function(req,res){
 
     if(!room){
 
+       
 
         try{
             res.send({value:false,message:"Room Not Found"});
@@ -153,17 +170,25 @@ router.post('/creatRoom', async function(req,res){
     
   });
 
-router.post('/stream',function(req,res){
+router.post('/stream',async function(req,res){
 
 
-    console.log("streaaaam");
+    //console.log("streaaaam");
     try {
-        
+        const room = await Room.findOne({name:req.body.Room})
+        room.streamed = 1;
+        await room.save();
+
+
         const child =exec("./stream.sh");
 
         child.stdout.pipe(process.stdout);
         child.stderr.pipe(process.stderr);
-   
+
+
+        
+
+  
         res.status(204).send();
      }
     catch(err){
@@ -174,7 +199,14 @@ router.post('/stream',function(req,res){
 
 
 
-
+router.get('/ChooseStream',  (req,res)=>{
+    try{    
+        res.sendFile('ChooseStream.html', { root: path.join(__dirname, '../public') });
+    }
+    catch(err){
+        res.status(400).send(err);
+    }
+});
 
 
 router.get('/', function(req, res){

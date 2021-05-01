@@ -79,6 +79,45 @@ function SignUp_Request(email,pseudo,pwd){
     
 }
 
+ function login_streaming() {
+
+    
+
+    axios.post('/ChooseStream', {
+        Id: localStorage.getItem('Id')   
+      }).then((response) => {
+        const rooms =response.data;
+        console.log(rooms);
+        //rooms.forEach(element => console.log(element));
+        //var streams = document.getElementById('streams');
+        var list = document.getElementById('list');
+        rooms.forEach(element => {
+        var room = document.createElement('li');
+        room.innerHTML='<p><a href="#">'+element+'</a></p>';
+        list.appendChild(room);})
+
+    }, (error) => {
+        console.log(error);
+      });
+}
+
+function StartStream() {
+
+    axios.post('/stream', {
+
+        Id: localStorage.getItem('Id'),
+        Room :  localStorage.getItem('RoomId')
+
+      }).then((response) => {
+       
+
+    }, (error) => {
+        console.log(error);
+      });
+}
+
+ 
+
 function logIn_Request(email,pwd){
 
     axios.post('/LogIn', {

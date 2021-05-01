@@ -19,6 +19,12 @@ const roomShema = new mongoose.Schema({
         default : []
 
     },
+    streamed: {
+
+        type: String,
+        default : 0
+
+    },
 
     date: {
         type: Date,
