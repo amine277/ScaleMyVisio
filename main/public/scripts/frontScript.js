@@ -145,8 +145,7 @@ function logIn_Request(email,pwd){
 
 function JoinRoom(name,RoomId,Id){
 
-    console.log('whyy2')
-
+    socket.disconnect();
     axios.post('/joinRoom', {
         roomId: RoomId,
         name: name,
@@ -173,7 +172,7 @@ function JoinRoom(name,RoomId,Id){
 
 function creatRoom(name,RoomId,Id){
 
-
+    socket.disconnect();
     axios.post('/creatRoom', {
         roomId: RoomId,
         name: name,
@@ -226,7 +225,10 @@ function Room_update_loc(name,RoomId){
 
 function exitRoom(){
     axios.post('/exitRoom', {
-        Id: sessionStorage.getItem('Id')
+        Id: sessionStorage.getItem('Id'),
+        name: sessionStorage.getItem('name'),
+        roomId: sessionStorage.getItem('RoomId')
+
       })
 
       .then((response) => {

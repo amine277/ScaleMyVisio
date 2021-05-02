@@ -7,7 +7,7 @@ const mediasoup = require('mediasoup')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-
+const {socket_disconnect} = require('../routes/BackEndScripts')
 const { exec } = require("child_process");
 
 //Import Routes
@@ -153,8 +153,13 @@ io.on('connection', socket => {
         }
     })
 
+    socket.on('userId',Id =>{
+        socket.Id=Id;
+    })
+
     socket.on('join', ({
         room_id,
+        Id,
         name
     }, cb) => {
 
@@ -164,12 +169,13 @@ io.on('connection', socket => {
                 error: 'room does not exist'
             })
         }
-        roomList.get(room_id).addPeer(new Peer(socket.id, name))
+        roomList.get(room_id).addPeer(new Peer(socket.id, name, Id))
         socket.room_id = room_id
 
         cb(roomList.get(room_id).toJson())
     })
 
+    
     socket.on('getProducers', () => {
         console.log(`---get producers--- name:${roomList.get(socket.room_id).getPeers().get(socket.id).name}`)
         // send all the current producer to newly joined member
@@ -265,7 +271,10 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect', () => {
-        //console.log(`---disconnect--- name: ${roomList.get(socket.room_id) && roomList.get(socket.room_id).getPeers().get(socket.id).name}`)
+        if(roomList.get(socket.room_id)){
+        const Id = roomList.get(socket.room_id).getPeers().get(socket.id).Id;
+        socket_disconnect(Id);}
+        console.log(`---disconnect--- name: ${roomList.get(socket.room_id) && roomList.get(socket.room_id).getPeers().get(socket.id).Id}`)
         if (!socket.room_id) return
         roomList.get(socket.room_id).removePeer(socket.id)
     })
@@ -278,7 +287,7 @@ io.on('connection', socket => {
     })
     
     socket.on('message',msg => {
-       io.emit('serverMessage',msg)
+       io.emit('serverMessage',{msg:msg,name:"amine"})
        console.log("Just sent: " + msg)
     })
 

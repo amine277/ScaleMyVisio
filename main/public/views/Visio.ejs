@@ -158,14 +158,13 @@
 
 
         var inRoom = sessionStorage.getItem('inRoom');
-        console.log(inRoom)
 
-        if(inRoom == 0 ){
-            console.log("yaa")
+        //if(inRoom == 0 ){
         var name = sessionStorage.getItem('name');
         var RoomId = sessionStorage.getItem('RoomId');
         sessionStorage.setItem('inRoom',1);
-        joinRoom(name,RoomId);}
+        joinRoom(name,RoomId);
+    //}
 
       </script>
 </footer>

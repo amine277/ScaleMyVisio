@@ -23,14 +23,16 @@ socket.request = function request(type, data = {}) {
 
 let rc = null
 
+
 function joinRoom(name, room_id) {
+  const Id = sessionStorage.getItem('Id');
 
   
   if (rc && rc.isOpen()) {
     console.log('already connected to a room')
   } else {
 
-    rc = new RoomClient(localMedia, remoteVideos, remoteAudios, window.mediasoupClient, socket, room_id, name, roomOpen,ParticipantList)
+    rc = new RoomClient(localMedia, remoteVideos, remoteAudios, window.mediasoupClient, socket, room_id, name, Id, roomOpen,ParticipantList)
 
     addListeners()
 /*  var data = new FormData();
@@ -133,6 +135,11 @@ navigator.mediaDevices.enumerateDevices().then(devices =>
   })
 )}
 
+//sending user Id to server
+socket.emit('userId',sessionStorage.getItem('Id'));
+
+
+
 let text = $('input')
 
 $('html').keydown((e) => {
@@ -146,7 +153,7 @@ $('html').keydown((e) => {
 socket.on('serverMessage',(msg)=> {
         let conteneur = document.getElementById('conteneurMessage');
         let message = document.createElement('li');
-        message.innerText = msg;
+        message.innerText = msg.msg;
         conteneur.appendChild(message);
         })
         

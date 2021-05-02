@@ -21,11 +21,11 @@ const userShema = new mongoose.Schema({
     },
     room: {
         type: String,
-        default : 0
+        default : null
     },
     role: {
         type: Number,
-        default : 0
+        default : null
     },
     date: {
         type: Date,

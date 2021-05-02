@@ -16,8 +16,10 @@ const _EVENTS = {
 
 class RoomClient {
 
-    constructor(localMediaEl, remoteVideoEl, remoteAudioEl, mediasoupClient, socket, room_id, name, successCallback,localParticipant) {
+    constructor(localMediaEl, remoteVideoEl, remoteAudioEl, mediasoupClient, socket, room_id, name, Id,successCallback,localParticipant) {
         this.name = name
+        this.Id = Id
+
         this.localMediaEl = localMediaEl
         this.remoteVideoEl = remoteVideoEl
         this.remoteAudioEl = remoteAudioEl
@@ -47,7 +49,7 @@ class RoomClient {
 
 
         this.createRoom(room_id).then(async function () {
-            await this.join(name, room_id)
+            await this.join(name, room_id,Id)
             this.initSockets()
             this._isOpen = true
             successCallback()
@@ -74,10 +76,11 @@ class RoomClient {
         })
     }
 
-    async join(name, room_id) {
+    async join(name, room_id,Id) {
 
         socket.request('join', {
             name,
+            Id,
             room_id
         }).then(async function (e) {
             console.log(e)

@@ -77,10 +77,17 @@ router.post('/infoRequest', async function(req,res){
   });
 
   
-router.post('/exitRoom',function(req,res){
-     
+router.post('/exitRoom',async function(req,res){
+    var user_name = req.body.name;
+    var roomName = req.body.roomId;
     var Id = req.body.Id;
 
+    const room = await Room.findOne({name:roomName})
+    
+    if(room){
+        room.participant.pop({Id:Id,username:!null});
+        const savedRoom =  await room.save();
+    }
     res.send({value:true});
   });
 
@@ -113,6 +120,7 @@ router.post('/creatRoom', async function(req,res){
     });
 
         try{
+
             const user = await User.findOne({_id:Id})
             user.room = roomName;
             user.role = 1;
@@ -120,7 +128,9 @@ router.post('/creatRoom', async function(req,res){
 
             room.participant.push({Id:Id,username:user_name});
             const savedRoom =  await room.save();
+            console.log("ll")
             res.send({value:true,url:room.url})
+
         }
         catch(err){
             res.send(err);
