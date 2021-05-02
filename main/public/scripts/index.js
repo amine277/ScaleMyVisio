@@ -153,7 +153,7 @@ $('html').keydown((e) => {
 socket.on('serverMessage',(msg)=> {
         let conteneur = document.getElementById('conteneurMessage');
         let message = document.createElement('li');
-        message.innerText = msg.msg;
+        message.innerText = `${msg.nick}: ${msg.msg}`;
         conteneur.appendChild(message);
         })
         

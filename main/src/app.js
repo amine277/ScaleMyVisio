@@ -162,7 +162,6 @@ io.on('connection', socket => {
         Id,
         name
     }, cb) => {
-
         console.log('---user joined--- \"' + room_id + '\": ' + name)
         if (!roomList.has(room_id)) {
             return cb({
@@ -171,7 +170,7 @@ io.on('connection', socket => {
         }
         roomList.get(room_id).addPeer(new Peer(socket.id, name, Id))
         socket.room_id = room_id
-
+        socket.name = name
         cb(roomList.get(room_id).toJson())
     })
 
@@ -287,7 +286,7 @@ io.on('connection', socket => {
     })
     
     socket.on('message',msg => {
-       io.emit('serverMessage',{msg:msg,name:"amine"})
+       io.emit('serverMessage',{msg : msg, nick: socket.name})
        console.log("Just sent: " + msg)
     })
 
