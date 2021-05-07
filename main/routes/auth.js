@@ -3,7 +3,7 @@ const User = require('../src/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {registerValidation,loginValidation} = require('../routes/validation');
-const { exist } = require('@hapi/joi');
+const { exist } = require('@hapi/joi'); 
 const path = require('path');
 
 
@@ -13,37 +13,35 @@ const path = require('path');
 
 
 router.post('/SignUp',  async (req,res)=>{
-    // Validate data
-    console.log("dada")
-    const {error} = registerValidation(req.body);
-    if(error) return res.send(error.details[0].message);
+  // Validate data
 
-    // check if user already exist
-    const emailExist = await User.findOne({email:req.body.email})
-    if(emailExist) return res.send('Email already exist !')
+  console.log("dada");
+  const { error } = registerValidation(req.body);
+  if (error) return res.send(error.details[0].message);
 
-    //Hash the password
-    const salt = await  bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(req.body.password,salt);
+  // check if user already exist
+  const emailExist = await User.findOne({ email: req.body.email });
+  if (emailExist) return res.send("Email already exist !");
 
-    // Add User
-    const user = new User({
-        name : req.body.name,
-        email : req.body.email,
-        password : hashedPassword
-    });
-    
-    try{
+  //Hash the password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-        const savedUser =  await user.save();
+  // Add User
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: hashedPassword,
+  });
 
-        res.send({value:true,Id:user._id})
-        //res.send({value:true,Id:user._id});
-    }
-    catch(err){
-        res.send(err);
-    }
+  try {
+    const savedUser = await user.save();
 
+    res.send({ value: true, Id: user._id });
+    //res.send({value:true,Id:user._id});
+  } catch (err) {
+    res.send(err);
+  }
 });
 
 

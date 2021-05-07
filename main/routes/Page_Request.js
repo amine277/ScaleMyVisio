@@ -117,24 +117,23 @@ router.post('/creatRoom', async function(req,res){
     if (!roomexist){
 
     const room = new Room({
-            admin : Id,
-            name : roomName,
-            url : uuidV4()           
+      admin: Id,
+      name: roomName,
+      url: uuidV4(),
     });
 
-        try{
+    try{
+      const user = await User.findOne({ _id: Id });
 
-            const user = await User.findOne({_id:Id})
-            user.room = roomName;
-            user.role = 1;
-            const savedUser =  await user.save();
+      user.room = roomName;
+      user.role = 1;
+      const savedUser = await user.save();
 
-            room.participant.push({Id:Id,username:user_name});
-            const savedRoom =  await room.save();
-            console.log("ll")
-            res.send({value:true,url:room.url})
-
-        }
+      room.participant.push({ Id: Id, username: user_name });
+      const savedRoom = await room.save();
+      console.log("ll");
+      res.send({ value: true, url: room.url });
+    }
         catch(err){
             res.send(err);
     }
