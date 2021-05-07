@@ -4,10 +4,13 @@ const { v4 : uuidV4} = require('uuid');
 const shell = require('shelljs') ;
 const exec = require('child_process').exec;
 const { spawn } = require('child_process');
+const cp = require('child_process')
 
 
 const User = require('../src/User');
 const Room = require('../src/Rooms');
+
+var child;
 
 
 //const { joinRoom } = require('../public/index');
@@ -190,13 +193,11 @@ router.post('/stream',async function(req,res){
         await room.save();
 
 
-        const child =exec("./stream.sh");
+         child =cp.spawn("./stream.sh");
 
         child.stdout.pipe(process.stdout);
         child.stderr.pipe(process.stderr);
 
-
-        
 
   
         res.status(204).send();
@@ -207,6 +208,27 @@ router.post('/stream',async function(req,res){
     
   });
 
+  router.post('/stop_stream',async function(req,res){
+
+
+    //console.log("streaaaam");
+    try {
+        const room = await Room.findOne({name:req.body.Room})
+        room.streamed = 0;
+        await room.save();
+
+       
+        child.kill();
+
+
+  
+        res.status(204).send();
+     }
+    catch(err){
+        res.status(400).send(err);
+    }
+    
+  });
 
 
 router.get('/ChooseStream',  (req,res)=>{
@@ -225,6 +247,11 @@ router.get('/', function(req, res){
 
 router.get('/Home', function(req, res){
     res.render('Home')
+});
+
+
+router.get('/Streaming', function(req, res){
+    res.render('streaming')
 });
 
 router.get('/room/:room',async function(req, res){

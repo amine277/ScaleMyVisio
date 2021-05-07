@@ -103,10 +103,39 @@ function SignUp_Request(email,pseudo,pwd){
 
 function StartStream() {
 
+    var y = document.getElementById("passageVisioStreaming");
+    y.className = 'hidden';
+    
+    var x = document.getElementById("stopstream");
+    x.className = '';
+    
+
     axios.post('/stream', {
 
-        Id: localStorage.getItem('Id'),
-        Room :  localStorage.getItem('RoomId')
+        Id: sessionStorage.getItem('Id'),
+        Room :  sessionStorage.getItem('RoomId')
+
+      }).then((response) => {
+       
+
+    }, (error) => {
+        console.log(error);
+      });
+}
+
+
+function StopStream() {
+
+
+    var x = document.getElementById("stopstream");
+    x.className = 'hidden';
+    var y = document.getElementById("passageVisioStreaming");
+    y.className = '';
+
+    axios.post('/stop_stream', {
+
+        Id: sessionStorage.getItem('Id'),
+        Room :  sessionStorage.getItem('RoomId')
 
       }).then((response) => {
        
