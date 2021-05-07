@@ -1,6 +1,5 @@
 <html>
-
-<head>
+  <head>
     <script src="socket.io/socket.io.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="modules/mediasoupclient.min.js"></script>
@@ -9,71 +8,63 @@
     <script src="RoomClient.js"></script>
     <script type="text/javascript" src="frontScript.js"></script>
     <script type="text/javascript">
-        IsLogedIn();
+      IsLogedIn();
     </script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://vjs.zencdn.net/7.5.5/video-js.css" rel="stylesheet">
-		<script src="https://vjs.zencdn.net/7.5.5/video.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://vjs.zencdn.net/7.5.5/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.5.5/video.js"></script>
     <style>
-        .settings {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 2px 2px;
-            cursor: pointer;
-        }
+      .settings {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 2px 2px;
+        cursor: pointer;
+      }
 
-        .hidden {
-            display: none
-        }
+      .hidden {
+        display: none;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    
+  <body>
     <!--                NAVIGATION BAR                              -->
     <nav>
-        <p>Choose a Stream to join</p>
+      <p>Choose a Stream to join</p>
     </nav>
-    
 
-    
     <!--                Streaming SECTION                           -->
-    
+
     <!--                Streaming SECTION                           -->
-    
+
     <div id="streams">
-        <ul id="list">
-            <script>  
-                    
-                login_streaming();
-              
-            </script>
-
-            
-        </ul>
-        
+      <ul id="list">
+        <script>
+          login_streaming();
+        </script>
+      </ul>
     </div>
-    
- 
-    
-    
-    
+  </body>
 
-</body>
-
-
-
-<footer>
+  <footer>
     <script src="/socket.io/socket.io.js"></script>
-   
-</footer>
-
+  </footer>
 </html>

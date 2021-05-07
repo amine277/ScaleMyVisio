@@ -24,14 +24,14 @@ async function Clean_room_hist(Id){
     }
 
     if(room){
-        room.participant.pop({Id:Id,username:!null});
-        const savedRoom =  await room.save();
+      room.participant.pop({ Id: Id, username: !null });
+      const savedRoom = await room.save();
 
-        //delete room if empty
-        if(room.participant.length==0){
-            room.remove();
-        }
-        console.log("deleted")    
+      //delete room if empty
+      if (room.participant.length == 0) {
+        room.remove();
+      }
+      console.log("deleted");
     }
 
 }
