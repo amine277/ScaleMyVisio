@@ -83,7 +83,7 @@ a:hover {
 
 nav {
     width: 100%;
-    height: 60px;
+    height: 8%;
     font-family: 'Poppins', sans-serif; 
     background-color: #373636;
 }
@@ -94,13 +94,6 @@ nav p {
     margin-left: 30px;
     transform: translateY(26%);
 }
-/*nav a {
-    color: rgb(226,226,226);
-    font-size: 28px;
-    margin-left: 30px;
-    transform: translateY(26%);
-}*/
-
 
 /*                                  LOGIN SECTION                               */
 
@@ -202,7 +195,17 @@ nav p {
     color: #8A8A8A;
 }
 
-#noAccount a:hover {
+#noAccount_button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'arial', sans-serif;
+    cursor: pointer;
+    color: #8A8A8A;
+    font-size: 20px;
+}
+
+#noAccount_button:hover {
     color: #367F39;
 }
 
@@ -265,7 +268,7 @@ nav p {
 #buttons {
     position: fixed;
     bottom: 0;
-    width: 1300px;
+    width: 80%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -354,13 +357,13 @@ video {
 }
 
 #FirstVideoDiv {
+    height: 40%;
     width: 100%;
     display: flex;
     flex-direction: row;
 }
 
 #localMedia {
-    height: 330px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -419,12 +422,11 @@ video {
 }
 
 #remoteVideos {
-    height: 330px;
-    width: 1300px;
+    height: 41%;
+    width: 80%;
     display: flex;
     flex-direction: row;
     flex-wrap:  wrap;
-    
     justify-content: center;
     align-items: center;
 }
