@@ -1,5 +1,8 @@
 /*                   Redirection de fichiers front                      */
 
+
+
+
 function exit() {
   sessionStorage.clear();
   axios
@@ -102,7 +105,7 @@ function login_streaming() {
     );
 }
 
-function StartStream() {
+/*function StartStream() {
 
     var y = document.getElementById("passageVisioStreaming");
     y.className = 'hidden';
@@ -122,7 +125,10 @@ function StartStream() {
     }, (error) => {
         console.log(error);
       });
-}
+     
+    
+
+}*/
 
 
 function StopStream() {
@@ -171,6 +177,43 @@ function logIn_Request(email, pwd) {
     );
 }
 
+
+function JoinStream(name, RoomId, Id) {
+  socket.disconnect();
+  axios
+    .post("/joinStream", {
+      roomId: RoomId,
+      name: name,
+      Id: Id,
+    })
+    .then(
+      (response) => {
+        console.log(response);
+
+        if (response.data.value) {
+          window.location.pathname = `/stream/${response.data.url}`;
+          sessionStorage.setItem('stream_id',RoomId);
+          sessionStorage.setItem('name', name);
+        } else {
+          swal({
+            title: response.data.message,
+            icon: "error",
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+}
+
+function goVisio() {
+  
+  socket.emit('letmein', { viewerId : sessionStorage.getItem('Id') , roomToJoin : sessionStorage.getItem('stream_id') })
+
+
+}
+
 function JoinRoom(name, RoomId, Id) {
   socket.disconnect();
   axios
@@ -184,6 +227,7 @@ function JoinRoom(name, RoomId, Id) {
         console.log(response);
 
         if (response.data.value) {
+          sessionStorage.setItem("isAdmin", 0);
           window.location.pathname = `/room/${response.data.url}`;
         } else {
           swal({
@@ -209,7 +253,11 @@ function creatRoom(name, RoomId, Id) {
     .then(
       (response) => {
         if (response.data.value) {
+
+          sessionStorage.setItem("isAdmin", 1);
           window.location.pathname = `/room/${response.data.url}`;
+
+          socket.emit("addAdmin", { adminId : sessionStorage.getItem('Id') } );
         } else {
           swal({
             title: response.data.message,
@@ -380,6 +428,9 @@ function chatStreamingHide() {
     y.style.width = "100%";
   }
 }
+
+
+
 
 /*                          Fonction servant au chat                
 $('html').keydown((e) =>{

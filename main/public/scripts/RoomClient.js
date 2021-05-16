@@ -22,6 +22,7 @@ class RoomClient {
     mediasoupClient,
     socket,
     room_id,
+    adminId,
     name,
     Id,
     successCallback,
@@ -29,7 +30,7 @@ class RoomClient {
   ) {
     this.name = name;
     this.Id = Id;
-
+    this.adminId = adminId;
     this.localMediaEl = localMediaEl;
     this.remoteVideoEl = remoteVideoEl;
     this.remoteAudioEl = remoteAudioEl;
@@ -59,7 +60,7 @@ class RoomClient {
       }.bind(this)
     );
 
-    this.createRoom(room_id).then(
+    this.createRoom(room_id,adminId).then(
       async function () {
         await this.join(name, room_id, Id);
         this.initSockets();
@@ -76,10 +77,13 @@ class RoomClient {
 
   ////////// INIT /////////
 
-  async createRoom(room_id) {
+  async createRoom(room_id, adminId) {
+
+   
     await this.socket
       .request("createRoom", {
         room_id,
+        adminId
       })
       .catch((err) => {
         console.log(err);
@@ -294,6 +298,120 @@ class RoomClient {
     }
   }
 
+
+  async startStream () {
+    axios.post('/stream', {
+
+      Id: sessionStorage.getItem('Id'),
+      Room :  sessionStorage.getItem('RoomId')
+
+    }).then((response) => {
+     
+
+  }, (error) => {
+      console.log(error);
+    });
+   
+
+    let mediaConstraints = false;
+    let screen = true;
+    let audio = false ;
+    let type = "screenType";
+      
+    if (this.producerLabel.has(type)) {
+      console.log("producer already exists for this type " + type);
+      return;
+    }
+    console.log("mediacontraints:", mediaConstraints);
+    let stream;
+    try {
+      stream = screen
+        ? await navigator.mediaDevices.getDisplayMedia( {
+          video: true,
+          audio: true
+        })
+        : await navigator.mediaDevices.getUserMedia(mediaConstraints);
+      console.log(navigator.mediaDevices.getSupportedConstraints());
+
+      const track = audio
+        ? stream.getAudioTracks()[0]
+        : stream.getVideoTracks()[0];
+      const params = {
+        track,
+      };
+      
+      producer = await this.producerTransport.produce(params);
+
+      console.log("producer", producer);
+
+      socket.emit("startStream", { id : producer.id , rtpParameters : producer.rtpParameters , kind : producer.kind } );
+
+      this.producers.set(producer.id, producer);
+
+      let elem;
+      if (!audio) {
+        elem = document.createElement("video");
+        elem.srcObject = stream;
+        elem.id = producer.id;
+        elem.playsinline = false;
+        elem.autoplay = true;
+        elem.className = "vid";
+        this.localMediaEl.appendChild(elem);
+      }
+
+      producer.on("trackended", () => {
+        this.closeProducer(type);
+      });
+
+      producer.on("transportclose", () => {
+        console.log("producer transport close");
+        if (!audio) {
+          elem.srcObject.getTracks().forEach(function (track) {
+            track.stop();
+          });
+          elem.parentNode.removeChild(elem);
+        }
+        this.producers.delete(producer.id);
+      });
+
+      producer.on("close", () => {
+        console.log("closing producer");
+        if (!audio) {
+          elem.srcObject.getTracks().forEach(function (track) {
+            track.stop();
+          });
+          elem.parentNode.removeChild(elem);
+        }
+        this.producers.delete(producer.id);
+      });
+
+      this.producerLabel.set(type, producer.id);
+
+      switch (type) {
+        case mediaType.audio:
+          this.event(_EVENTS.startAudio);
+          break;
+        case mediaType.video:
+          this.event(_EVENTS.startVideo);
+          break;
+        case mediaType.screen:
+          this.event(_EVENTS.startScreen);
+          break;
+        default:
+          return;
+          break;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+
+
+
+
+
+  }
+
   async produce(type, deviceId = null) {
     let mediaConstraints = {};
     let audio = false;
@@ -384,6 +502,8 @@ class RoomClient {
       producer = await this.producerTransport.produce(params);
 
       console.log("producer", producer);
+
+      console.log("producer rtpp", producer.rtpParameters);
 
       this.producers.set(producer.id, producer);
 

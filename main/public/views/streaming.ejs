@@ -1,8 +1,10 @@
 <html>
 
 <head>
-    <script src="socket.io/socket.io.js"></script>
-    <script src="modules/mediasoupclient.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/modules/mediasoupclient.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="/scripts/RoomClient.js"></script>
@@ -52,7 +54,8 @@
         <div id="StreamDiv">
             <div id="videoStreming">
 		        <video id="player" class="video-js vjs-default-skin" width="720" controls preload="auto">
-		    	    <source src= "http://localhost:8080/hls/test.m3u8" type="application/x-mpegURL" />
+		    	    <source src= "http://localhost:8080/hls/test.m3u8"
+                 type="application/x-mpegURL" />
 		        </video>
 		        <script>
 		    	    var player = videojs('#player');
@@ -80,11 +83,11 @@
         </div>
         <div id="StreamingButtons">
             <div class="buttons_main">
-                <a href="Visio.html">
-                    <div id="passageStreamingVisio" onclick="joinRoom(nameInput.value, roomidInput.value)">
+                
+                    <div id="passageStreamingVisio" onclick="goVisio()">
                         <i class="fas fa-video"></i><p>Go Visio</p>
                     </div>
-                </a>
+                
             </div>
             <div class="buttons_deco">
                 <div>

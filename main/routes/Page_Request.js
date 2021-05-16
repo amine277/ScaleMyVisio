@@ -6,6 +6,8 @@ const exec = require('child_process').exec;
 const { spawn } = require('child_process');
 const cp = require('child_process')
 
+const {socket_disconnect} = require('./BackEndScripts')
+
 
 const User = require('../src/User');
 const Room = require('../src/Rooms');
@@ -85,12 +87,18 @@ router.post('/exitRoom',async function(req,res){
     var roomName = req.body.roomId;
     var Id = req.body.Id;
 
-    const room = await Room.findOne({name:roomName})
+    //const room = await Room.findOne({name:roomName})
+
     
-    if(room){
-        room.participant.pop({Id:Id,username:!null});
-        const savedRoom =  await room.save();
-    }
+    // if(room){
+    //     room.participant.pop({Id:Id,username:!null});
+    //     const savedRoom =  await room.save();
+    // }
+
+    socket_disconnect(Id)
+
+
+    
     res.send({value:true});
   });
 
@@ -182,10 +190,47 @@ router.post('/creatRoom', async function(req,res){
     
   });
 
+
+  router.post('/joinStream', async function(req,res){
+    var user_name = req.body.name;
+    var roomName = req.body.roomId;
+    var Id = req.body.Id;
+    
+
+    const room = await Room.findOne({name:roomName , streamed : 1})
+
+    if(!room){
+
+       
+
+        try{
+            res.send({value:false,message:"No stream available for this room"});
+        }
+        catch(err){
+            res.send(err);
+    }}
+    else{
+        try{
+            const user = await User.findOne({_id:Id})
+            user.stream = roomName;
+            user.role = 3;
+            const savedUser =  await user.save();
+
+            room.viewers.push({Id:Id,username:user_name});
+            const savedRoom =  await room.save();
+            res.send({value:true,url:room.url})
+        }
+        catch(err){
+            res.send(err);
+        }
+    }
+    
+  });
+
 router.post('/stream',async function(req,res){
 
 
-    //console.log("streaaaam");
+    
     try {
         const room = await Room.findOne({name:req.body.Room})
         room.streamed = 1;
@@ -261,6 +306,20 @@ router.get('/room/:room',async function(req, res){
 
     if(room){
     res.render('Visio')}
+
+    else{
+        res.render('Home')}
+ 
+    
+});
+router.get('/stream/:room',async function(req, res){
+    //var roomName = req.body.roomId;
+    //var Id = req.body.Id;
+
+    const stream = await Room.findOne({url:req.params.room , streamed : 1})
+
+    if(stream){
+    res.render('streaming')}
 
     else{
         res.render('Home')}

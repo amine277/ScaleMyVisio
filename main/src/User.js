@@ -23,6 +23,10 @@ const userShema = new mongoose.Schema({
         type: String,
         default : null
     },
+    stream: {
+        type: String,
+        default : null
+    },
     role: {
         type: Number,
         default : null
