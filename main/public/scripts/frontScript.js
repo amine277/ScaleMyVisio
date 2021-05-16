@@ -365,14 +365,14 @@ function ChatHide() {
 
   if (x.style.display === "none") {
     x.style.display = "block";
-    y.style.width = "1300px";
+    y.style.width = "80%";
     z0.style.width = "80%";
     z2.style.width = "100%";
   } else {
     x.style.display = "none";
-    y.style.width = "1500px";
+    y.style.width = "100%";
     z0.style.width = "100%";
-    z2.style.width = "1500px";
+    z2.style.width = "100%";
   }
 }
 
