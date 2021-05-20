@@ -21,7 +21,41 @@ socket.request = function request(type, data = {}) {
 
 let rc = null;
 
-function joinRoom(name, room_id) {
+/*function StartStream() {
+
+  var y = document.getElementById("passageVisioStreaming");
+  y.className = 'hidden';
+  
+  var x = document.getElementById("stopstream");
+  x.className = '';
+  
+
+  axios.post('/stream', {
+
+      Id: sessionStorage.getItem('Id'),
+      Room :  sessionStorage.getItem('RoomId')
+
+    }).then((response) => {
+     
+
+  }, (error) => {
+      console.log(error);
+    });
+
+
+   socket.emit("startStream", );
+
+    
+  
+
+}*/
+
+
+
+
+
+
+function joinRoom(name, room_id,adminId) {
   const Id = sessionStorage.getItem("Id");
 
   if (rc && rc.isOpen()) {
@@ -34,6 +68,7 @@ function joinRoom(name, room_id) {
       window.mediasoupClient,
       socket,
       room_id,
+      adminId,
       name,
       Id,
       roomOpen,
@@ -136,8 +171,48 @@ socket.on('serverMessage',(msg)=> {
   );
 }
 
+
+socket.on("hereyougo",() =>{
+  let roomName= sessionStorage.getItem("stream_id");
+ JoinRoom(sessionStorage.getItem("name"), sessionStorage.getItem("stream_id"), sessionStorage.getItem("Id"))
+ sessionStorage.removeItem("stream_id");
+ sessionStorage.setItem("RoomId", roomName);
+   
+})
+
+socket.on("sorry",() =>{
+ swal("Sorry the admin wont let you in !");
+  
+})
+
 //sending user Id to server
 socket.emit("userId", sessionStorage.getItem("Id"));
+
+
+socket.on("lethimin", ({viewerId , viewerSocket }) => {
+     
+     console.log("3afaaak dkhelni layhfdek  a si l admin" , viewerId)
+
+     swal({
+      title: "This guy want to join your room",
+      text: viewerId,
+      icon: "warning",
+      buttons: true,
+      dangerMode: false,
+    })
+    .then((willAdd) => {
+      if (willAdd) {
+        swal("Congrats! You got one more friend !", {
+          icon: "success",
+        });
+        socket.emit("okay", {viewerId : viewerId , viewerSocket : viewerSocket})
+      } else {
+        swal("Okay! We will take care of him");
+        socket.emit("mabghitch", {viewerId : viewerId , viewerSocket : viewerSocket })
+
+      }
+    });
+})
 
 let text = $("input");
 

@@ -49,6 +49,7 @@ function swaprole(){
 
 
 function getRoomClientList() {
+  console.log("roomId: " + sessionStorage.getItem("RoomId"))
   axios
     .post("/RoomClientList", {
       Id: sessionStorage.getItem("Id"),
@@ -57,7 +58,7 @@ function getRoomClientList() {
     .then(
       (response) => {
         const list = response.data.list;
-
+        
         let fen = document.getElementById("ParticipantList");
         fen.innerHTML = "";
         list.forEach((element) => {
@@ -137,7 +138,7 @@ function login_streaming() {
     );
 }
 
-function StartStream() {
+/*function StartStream() {
 
   var y = document.getElementById("passageVisioStreaming");
   y.className = 'hidden';
@@ -148,16 +149,13 @@ function StartStream() {
 
   axios.post('/stream', {
 
-    Id: sessionStorage.getItem('Id'),
-    Room: sessionStorage.getItem('RoomId')
+    }, (error) => {
+        console.log(error);
+      });
+     
+    
 
-  }).then((response) => {
-
-
-  }, (error) => {
-    console.log(error);
-  });
-}
+}*/
 
 
 function StopStream() {
@@ -204,6 +202,43 @@ function logIn_Request(email, pwd) {
         console.log(error);
       }
     );
+}
+
+
+function JoinStream(name, RoomId, Id) {
+  socket.disconnect();
+  axios
+    .post("/joinStream", {
+      roomId: RoomId,
+      name: name,
+      Id: Id,
+    })
+    .then(
+      (response) => {
+        console.log(response);
+
+        if (response.data.value) {
+          window.location.pathname = `/stream/${response.data.url}`;
+          sessionStorage.setItem('stream_id',RoomId);
+          sessionStorage.setItem('name', name);
+        } else {
+          swal({
+            title: response.data.message,
+            icon: "error",
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+}
+
+function goVisio() {
+  
+  socket.emit('letmein', { viewerId : sessionStorage.getItem('Id') , roomToJoin : sessionStorage.getItem('stream_id') })
+
+
 }
 
 function JoinRoom(name, RoomId, Id) {
@@ -273,7 +308,7 @@ function JoinRoom(name, RoomId, Id) {
 
 async function creatRoom(name, RoomId, Id) {
   socket.disconnect();    
-      swal("Jcole SCALEMYVISIO MEETING BOARD",`Do you wanna create an SMV Meeting named ? : ${RoomId}`, {
+      swal("SCALEMYVISIO MEETING BOARD",`Do you wanna create an SMV Meeting named ? : ${RoomId}`, {
         buttons: {
           confirm: {
             text: `Public`,
@@ -299,7 +334,11 @@ async function creatRoom(name, RoomId, Id) {
                 })
                 .then((response) => {
                   if (response.data.value) {
-                    window.location.pathname = `/room/${response.data.url}`;
+                    sessionStorage.setItem("isAdmin", 1);
+          window.location.pathname = `/room/${response.data.url}`;
+
+          socket.emit("addAdmin", { adminId : sessionStorage.getItem('Id') } );
+                    
                   } else {
                     swal({
                       title: response.data.message,
@@ -339,7 +378,12 @@ async function creatRoom(name, RoomId, Id) {
                   })
                   .then((response) => {
                     if (response.data.value) {
+                      sessionStorage.setItem("isAdmin", 1);
                       window.location.pathname = `/room/${response.data.url}`;
+
+                      socket.emit("addAdmin", { adminId : sessionStorage.getItem('Id') } );
+                    
+                      
                     } else {
                       swal({
                         title: response.data.message,
@@ -455,14 +499,14 @@ function ChatHide() {
 
   if (x.style.display === "none") {
     x.style.display = "block";
-    y.style.width = "1300px";
+    y.style.width = "80%";
     z0.style.width = "80%";
     z2.style.width = "100%";
   } else {
     x.style.display = "none";
-    y.style.width = "1500px";
+    y.style.width = "100%";
     z0.style.width = "100%";
-    z2.style.width = "1500px";
+    z2.style.width = "100%";
   }
 }
 

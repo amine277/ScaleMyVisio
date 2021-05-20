@@ -141,17 +141,42 @@ async function createWorkers() {
 io.on('connection', socket => {
 
     socket.on('createRoom', async ({
-        room_id
+        room_id,
+        adminId
     }, callback) => {
         if (roomList.has(room_id)) {
             callback('already exists')
         } else {
             console.log('---created room--- ', room_id)
+            console.log('---admin is ----', adminId)
             let worker = await getMediasoupWorker()
-            roomList.set(room_id, new Room(room_id, worker, io))
+            roomList.set(room_id, new Room(room_id, worker, io,socket.id))
             callback(room_id)
         }
     })
+    
+
+    socket.on('letmein', ( {viewerId , roomToJoin} ) =>{
+        console.log('---viewer want to get in ', viewerId)
+
+      const  socketAdmin = roomList.get(roomToJoin).getAdmin();
+
+       io.to(socketAdmin).emit('lethimin', { viewerId : viewerId, viewerSocket : socket.id });        
+
+      })
+
+      socket.on('okay', ( {viewerId , viewerSocket} ) =>{
+
+       io.to(viewerSocket).emit('hereyougo');        
+
+      })
+
+      socket.on('mabghitch', ( {viewerId , viewerSocket} ) =>{
+
+        io.to(viewerSocket).emit('sorry');        
+ 
+       })
+   
 
     socket.on('userId',Id =>{
         socket.Id=Id;
@@ -231,21 +256,48 @@ io.on('connection', socket => {
         
         if(!roomList.has(socket.room_id)) {
             return callback({error: 'not is a room'})
-        }
 
+        }
+ 
+      //  console.log(`rtpppp : ${rtpParameters}`)
 
 
         let producer_id = await roomList.get(socket.room_id).produce(socket.id, producerTransportId, rtpParameters, kind)
 
-        let router = await roomList.get(socket.room_id).getRouter();
+        //let router = await roomList.get(socket.room_id).getRouter();
        // console.log(router);
-        handleStartRecording(router,producer_id);
+        //handleStartRecording(router,producer_id);
 
         console.log(`---produce--- type: ${kind} name: ${roomList.get(socket.room_id).getPeers().get(socket.id).name} id: ${producer_id}`)
         callback({
             producer_id
         })
     })
+
+    socket.on('startStream', async ({
+      kind,
+      rtpParameters,
+      id}) => {
+      
+      /*if(!roomList.has(socket.room_id)) {
+          return callback({error: 'not is a room'})
+      }*/
+
+
+      console.log('sockeeeeet', socket.room_id)
+
+      let producer_id = id;
+
+     // let producer_id = await roomList.get(socket.room_id).produce(socket.id, id , rtpParameters, kind)
+
+      let router = await roomList.get(socket.room_id).getRouter();
+     // console.log(router);
+      handleStartRecording(router,producer_id);
+      console.log("Staaart Streaaaam")
+
+      console.log(`---produce--- type: ${kind} name: ${roomList.get(socket.room_id).getPeers().get(socket.id).name} id: ${producer_id}`)
+     
+  })
 
     socket.on('consume', async ({
         consumerTransportId,

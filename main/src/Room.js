@@ -1,7 +1,8 @@
 const config = require('./config')
 module.exports = class Room {
-    constructor(room_id, worker, io) {
+    constructor(room_id, worker, io, admin) {
         this.id = room_id
+        this.admin =  admin
         const mediaCodecs = config.mediasoup.router.mediaCodecs
         worker.createRouter({
             mediaCodecs
@@ -139,6 +140,11 @@ module.exports = class Room {
 
     getPeers(){
         return this.peers
+    }
+
+
+    getAdmin(){
+        return this.admin
     }
     getRouter(){
         return this.router

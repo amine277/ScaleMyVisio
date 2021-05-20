@@ -28,6 +28,12 @@ const roomShema = new mongoose.Schema({
         type: Array,
         default : []
     },
+
+    viewers: {
+        type: Array,
+        default : []
+
+    },
     streamed: {
         type: String,
         default : 0

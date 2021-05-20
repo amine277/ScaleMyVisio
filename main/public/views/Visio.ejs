@@ -84,10 +84,10 @@
                 </div>
             </div>
 
-            <div id="buttons_deco">
+            <div class="buttons_deco">
                
-                <div id="passageVisioStreaming" >
-                    <i class="fab fa-twitch" onclick="StartStream()" ></i><p>Go Streaming</p>
+                <div id="passageVisioStreaming" class='hidden'>
+                    <i class="fab fa-twitch" onclick="rc.startStream()" ></i><p>Go Streaming</p>
                 </div>
                 <div id="stopstream" class='hidden' >
                     <i class="fas fa-stop-circle" onclick="StopStream()" ></i><p>Stop Streaming</p>
@@ -160,6 +160,16 @@
     <script src="/scripts/index.js"></script>
     <script type="text/javascript">
         // Mon code Javascript
+          
+        console.log('is admiin ',sessionStorage.getItem('isAdmin') )
+        if ( sessionStorage.getItem('isAdmin') == 1  ){
+
+            console.log("helloo")
+
+            var y = document.getElementById("passageVisioStreaming");
+            y.className = '';
+
+        }
 
 
         var inRoom = sessionStorage.getItem('inRoom');
@@ -168,7 +178,7 @@
         var name = sessionStorage.getItem('name');
         var RoomId = sessionStorage.getItem('RoomId');
         sessionStorage.setItem('inRoom',1);
-        joinRoom(name,RoomId);
+        joinRoom(name,RoomId,sessionStorage.getItem('Id'));
     //}
 
       </script>
