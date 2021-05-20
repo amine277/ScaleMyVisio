@@ -1,3 +1,4 @@
+const { Long, Double } = require('bson');
 const mongoose = require('mongoose');
 
 const roomShema = new mongoose.Schema({
@@ -6,24 +7,30 @@ const roomShema = new mongoose.Schema({
     },  
     url:{
         type: String,
-    },   
+    },
+    type:{
+        type: Number,
+        required: true,
+        default : 0
+    },
+    password:{
+        type: String,
+        default : null,
+        max: 4
+    },
     name:{
         type: String,
         required: true,
         min: 1,
         max: 255
     },
-
     participant: {
         type: Array,
         default : []
-
     },
     streamed: {
-
         type: String,
         default : 0
-
     },
 
     date: {

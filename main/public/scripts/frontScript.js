@@ -1,5 +1,9 @@
 /*                   Redirection de fichiers front                      */
 
+const { response } = require("express");
+
+//const  response  = require("express");
+
 function exit() {
   sessionStorage.clear();
   axios
@@ -7,13 +11,42 @@ function exit() {
       Id: sessionStorage.getItem("Id"),
     })
     .then(
-      (response) => {},
+      (response) => { },
       (error) => {
         console.log(error);
       }
     );
   window.location.pathname = "/";
 }
+
+
+function swaprole(){
+  axios
+  .post("/SwapRole", {
+    Id: sessionStorage.getItem("Id"),
+    roomId: sessionStorage.getItem("RoomId"),
+    
+  })
+  .then((response) => {
+    const list = response.data.list;
+
+    let fen = document.getElementById("ParticipantListExtra");
+    fen.innerHTML = "";
+    list.forEach((element) => {
+      let part = document.createElement("li");
+      part.innerText = element.username;
+      var swap = document.createElement("button");
+      swap.setAttribute('class', 'btn btn-default');
+      swap.innerHTML = 'SWAP ROLE';
+      fen.appendChild(part);
+    });
+  },
+  (error) => {
+    console.log(error);
+  }
+);
+}
+
 
 function getRoomClientList() {
   axios
@@ -78,6 +111,8 @@ function SignUp_Request(email, pseudo, pwd) {
     );
 }
 
+
+
 function login_streaming() {
   axios
     .post("/ChooseStream", {
@@ -104,47 +139,47 @@ function login_streaming() {
 
 function StartStream() {
 
-    var y = document.getElementById("passageVisioStreaming");
-    y.className = 'hidden';
-    
-    var x = document.getElementById("stopstream");
-    x.className = '';
-    
+  var y = document.getElementById("passageVisioStreaming");
+  y.className = 'hidden';
 
-    axios.post('/stream', {
+  var x = document.getElementById("stopstream");
+  x.className = '';
 
-        Id: sessionStorage.getItem('Id'),
-        Room :  sessionStorage.getItem('RoomId')
 
-      }).then((response) => {
-       
+  axios.post('/stream', {
 
-    }, (error) => {
-        console.log(error);
-      });
+    Id: sessionStorage.getItem('Id'),
+    Room: sessionStorage.getItem('RoomId')
+
+  }).then((response) => {
+
+
+  }, (error) => {
+    console.log(error);
+  });
 }
 
 
 function StopStream() {
 
 
-    var x = document.getElementById("stopstream");
-    x.className = 'hidden';
-    var y = document.getElementById("passageVisioStreaming");
-    y.className = '';
+  var x = document.getElementById("stopstream");
+  x.className = 'hidden';
+  var y = document.getElementById("passageVisioStreaming");
+  y.className = '';
 
-    axios.post('/stop_stream', {
+  axios.post('/stop_stream', {
 
-        Id: sessionStorage.getItem('Id'),
-        Room :  sessionStorage.getItem('RoomId')
+    Id: sessionStorage.getItem('Id'),
+    Room: sessionStorage.getItem('RoomId')
 
-      }).then((response) => {
-       
+  }).then((response) => {
 
-    }, (error) => {
-        console.log(error);
-      }
-    );
+
+  }, (error) => {
+    console.log(error);
+  }
+  );
 }
 
 function logIn_Request(email, pwd) {
@@ -180,48 +215,151 @@ function JoinRoom(name, RoomId, Id) {
       Id: Id,
     })
     .then(
-      (response) => {
-        console.log(response);
-
-        if (response.data.value) {
+      (res) => {
+        if (res.data.value && !res.data.type ) {
           window.location.pathname = `/room/${response.data.url}`;
-        } else {
+        }
+        else if (!res.data.value ) {
           swal({
             title: response.data.message,
             icon: "error",
           });
         }
-      },
+        else if (res.data.value && res.data.type){
+          swal({
+            icon:"info",
+            title: "Type in the SMV pin code",
+            text: "Please Type 4 Digit Numbers",
+            content: {
+              element : "input",
+              attributes : {
+                placeholder : "Type your pin code",
+                type :"password",
+              },
+            },
+            inputType: "password",  
+            showCancelButton: true,
+            closeOnConfirm: false  
+          }).then((value) => {
+            console.log(value);
+            axios.post("/joinprivateroom", {
+              roomId: RoomId,
+              name: name,
+              Id: Id,
+              password : value
+            })
+            .then((response) => {
+              if (response.data.value) {
+                window.location.pathname = `/room/${response.data.url}`;
+              } else {
+                swal({
+                  title: response.data.message,
+                  icon: "error",
+                });
+              }
+            },
+              (error) => {
+                console.log(error);
+              })
+
+        },
       (error) => {
         console.log(error);
       }
     );
+        }
+})
 }
 
-function creatRoom(name, RoomId, Id) {
-  socket.disconnect();
-  axios
-    .post("/creatRoom", {
-      roomId: RoomId,
-      name: name,
-      Id: Id,
-    })
-    .then(
-      (response) => {
-        if (response.data.value) {
-          window.location.pathname = `/room/${response.data.url}`;
-        } else {
-          swal({
-            title: response.data.message,
-            icon: "error",
-          });
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+async function creatRoom(name, RoomId, Id) {
+  socket.disconnect();    
+      swal("Jcole SCALEMYVISIO MEETING BOARD",`Do you wanna create an SMV Meeting named ? : ${RoomId}`, {
+        buttons: {
+          confirm: {
+            text: `Public`,
+            value: "public",
+          },
+          secure: {
+            text:`Private`,
+            value: "private",
+          },
+          exit: true,
+        },
+      })        .then((value) => {
+          switch (value) {
+            case "public":
+              swal("SMV meeting is created!", "success");
+              console.log(RoomId);
+              axios.post("/creatRoom", {
+                  roomId: RoomId,
+                  name: name,
+                  Id: Id,
+                  type: 0,
+                  password : null
+                })
+                .then((response) => {
+                  if (response.data.value) {
+                    window.location.pathname = `/room/${response.data.url}`;
+                  } else {
+                    swal({
+                      title: response.data.message,
+                      icon: "error",
+                    });
+                  }
+                },
+                  (error) => {
+                    console.log(error);
+                  }
+                );
+              break;
+
+              case "private":
+                swal({
+                  icon:"info",
+                  title: "Create your SMV pin code",
+                  text: "Please Type 4 Digit Numbers",
+                  content: {
+                    element : "input",
+                    attributes : {
+                      placeholder : "Type your pin code",
+                      type :"password",
+                    },
+                  },
+                  inputType: "password",  
+                  showCancelButton: true,
+                  closeOnConfirm: false  
+                }).then((value) => {
+                  console.log(value);
+                  axios.post("/creatRoom", {
+                    roomId: RoomId,
+                    name: name,
+                    Id: Id,
+                    type: 1,
+                    password : value
+                  })
+                  .then((response) => {
+                    if (response.data.value) {
+                      window.location.pathname = `/room/${response.data.url}`;
+                    } else {
+                      swal({
+                        title: response.data.message,
+                        icon: "error",
+                      });
+                    }
+                  },
+                    (error) => {
+                      console.log(error);
+                    })
+                  });
+                break;
+                
+                };
+             
+            
+        });
+
 }
+
 
 function SendRequest(payload, url) {
   // Turn the data object into an array of URL-encoded key/value pairs.
@@ -381,7 +519,7 @@ function chatStreamingHide() {
   }
 }
 
-/*                          Fonction servant au chat                
+/*                          Fonction servant au chat
 $('html').keydown((e) =>{
     if (e.which == 13){
         const text = $('#chat_input');

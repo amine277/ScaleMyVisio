@@ -404,6 +404,11 @@ video {
     margin-top: 5px;
     display: none;
 }
+#ParticipantListExtra {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+}
 
 #ParticipantControl p {
     color: white;
