@@ -65,6 +65,7 @@
             <div id="ParticipantsStreaming" class="hidden">
                 <div class="chat_header">
                     <p>Participants</p>
+                    <ul id="ParticipantList"></ul>
                 </div>
             </div>
         
@@ -91,7 +92,7 @@
             </div>
             <div class="buttons_deco">
                 <div>
-                    <i class="fas fa-users" onclick="participantStreamingHide()"></i><p>Participants</p>
+                    <i class="fas fa-users" onclick="getRoomClientList();participantStreamingHide()"></i><p>Participants</p>
                 </div>
                 <div>
                     <i class="fas fa-comment-alt" onclick="chatStreamingHide()"></i><p>Chat</p>

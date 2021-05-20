@@ -45,13 +45,8 @@ router.post('/ChooseStream', async function(req,res){
 
 
 router.post('/RoomClientList', async function(req,res){
-    
-
-    console.log("RoomClientList")
-
     var Id = req.body.Id;
     var roomId = req.body.roomId;
-    console.log(roomId)
 
     const room = await Room.findOne({name:roomId})
     if(room){

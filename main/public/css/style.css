@@ -20,6 +20,10 @@ a:hover {
     text-decoration: none;
 }
 
+input::placeholder {
+    color:B9B9B9;
+}
+
 
 /*                                  NAVBAR SECTION                              */
 #btn {
@@ -287,7 +291,7 @@ nav p {
     display: flex;
     flex-direction: row;
 }
-#buttons_deco {
+.buttons_deco {
     display: flex;
     flex-direction: row;
 }
@@ -335,7 +339,7 @@ nav p {
     background-color: transparent;
     border: none;
     width:100%;
-    color: black;
+    color: white;
 }
 
 #conteneurMessage li {
@@ -460,7 +464,7 @@ video {
 
 #ChatStreaming{
     top:0;
-    width: 20%;
+    width: 25%;
     height: 100%;
     float: right;
     background-color: #343434;

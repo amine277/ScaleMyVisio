@@ -19,6 +19,7 @@ function exit() {
 }
 
 function getRoomClientList() {
+  console.log("roomId: " + sessionStorage.getItem("RoomId"))
   axios
     .post("/RoomClientList", {
       Id: sessionStorage.getItem("Id"),
@@ -27,7 +28,7 @@ function getRoomClientList() {
     .then(
       (response) => {
         const list = response.data.list;
-
+        
         let fen = document.getElementById("ParticipantList");
         fen.innerHTML = "";
         list.forEach((element) => {
