@@ -1,6 +1,6 @@
 /*                   Redirection de fichiers front                      */
 
-const { response } = require("express");
+//const { response } = require("express");
 
 //const  response  = require("express");
 
@@ -252,7 +252,7 @@ function JoinRoom(name, RoomId, Id) {
     .then(
       (res) => {
         if (res.data.value && !res.data.type ) {
-          window.location.pathname = `/room/${response.data.url}`;
+          window.location.pathname = `/room/${res.data.url}`;
         }
         else if (!res.data.value ) {
           swal({
