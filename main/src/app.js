@@ -338,8 +338,7 @@ io.on('connection', socket => {
     })
     
     socket.on('message',msg => {
-       io.emit('serverMessage',{msg : msg, nick: socket.name})
-       console.log("Just sent: " + msg)
+       io.emit('serverMessage',/*{msg : msg, nick: socket.name}*/msg)
     })
 
     socket.on('exitRoom', async (_, callback) => {

@@ -218,8 +218,7 @@ let text = $("input");
 
 $("html").keydown((e) => {
   if (e.which == 13 && text.val().length !== 0) {
-    console.log("On index.js: " + text.val());
-    socket.emit("message", text.val());
+    socket.emit("message", sessionStorage.getItem("name") + ": " + text.val());
     text.val("");
   }
 });
@@ -227,6 +226,6 @@ $("html").keydown((e) => {
 socket.on("serverMessage", (msg) => {
   let conteneur = document.getElementById("conteneurMessage");
   let message = document.createElement("li");
-  message.innerText = `${msg.nick}: ${msg.msg}`;
+  message.innerText = /*`${msg.nick}: ${msg.msg}`*/msg;
   conteneur.appendChild(message);
 });
