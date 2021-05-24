@@ -82,7 +82,7 @@ input::placeholder {
     border-radius: 0;
     position: center;
     
-    border-bottom: 2px solid #4caf50;
+    border-bottom: 2px solid #6495ED;
   }
 
 /*nav {
@@ -99,10 +99,11 @@ input::placeholder {
     transform: translateY(26%);
 }*/
 .logo {
-    width: 200px;
+    width: 220px;
     position: absolute;
 }
 div img {
+    width: 200px;
     padding-top: 20px;
     padding-left: 15px;
 }
@@ -122,7 +123,7 @@ div img {
 #login h1 {
     float: left;
     font-size: 40px;
-    border-bottom: 6px solid #4caf50;
+    border-bottom: 6px solid #6495ED;
     margin-bottom: 50px;
 }
 
@@ -131,7 +132,7 @@ div img {
     overflow: hidden;
     padding: 8px 0;
     margin: 8px 0;
-    border-bottom: 1px solid #4caf50;
+    border-bottom: 1px solid #6495ED;
 }
 
 .textbox i{
@@ -165,7 +166,7 @@ div img {
 #startButtons button {
     width: 30%;
     background: none;
-    border: 2px solid #4caf50;
+    border: 2px solid #6495ED;
     color: white;
     padding: 5px;
     cursor: pointer;
@@ -187,14 +188,14 @@ div img {
 #home h1 {
     float: left;
     font-size: 40px;
-    border-bottom: 6px solid #4caf50;
+    border-bottom: 6px solid #6495ED;
     margin-bottom: 50px;
 }
 
 #homeButton {
     width: 100%;
     background: none;
-    border: 2px solid #4caf50;
+    border: 2px solid #6495ED;
     color: white;
     padding: 5px;
     cursor: pointer;
@@ -218,7 +219,7 @@ div img {
 }
 
 #noAccount_button:hover {
-    color: #367F39;
+    color: #6495ED;
 }
 
 .eye i {
@@ -245,14 +246,14 @@ div img {
 #register h1 {
     float: left;
     font-size: 40px;
-    border-bottom: 6px solid #4caf50;
+    border-bottom: 6px solid /*#4caf50*/#6495ED;
     margin-bottom: 50px;
 }
 
 #register button {
     width: 100%;
     background: none;
-    border: 2px solid #4caf50;
+    border: 2px solid #6495ED;
     color: white;
     padding: 5px;
     cursor: pointer;
