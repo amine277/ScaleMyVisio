@@ -476,6 +476,8 @@ video {
     margin-top: 15px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding-bottom:90px;
 }
 
 #ChatStreaming{
