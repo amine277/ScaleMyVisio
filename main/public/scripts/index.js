@@ -178,7 +178,7 @@ socket.on("hereyougo", () => {
 });
 
 socket.on("sorry", () => {
-  swal("Sorry the admin wont let you in !");
+  swal("Sorry the admin didn't accept your request !");
 });
 
 socket.on("adminInviteYou", ({ socketAdmin }) => {
@@ -212,14 +212,14 @@ socket.on("lethimin", ({ viewerId, viewerSocket, viewerName }) => {
   console.log("3afaaak dkhelni layhfdek  a si l admin", viewerId);
 
   swal({
-    title: "This guy want to join your room",
+    title: "This viewer want to join your room",
     text: viewerName,
     icon: "warning",
     buttons: true,
     dangerMode: false,
   }).then((willAdd) => {
     if (willAdd) {
-      swal("Congrats! You got one more friend !", {
+      swal("Congrats! You have one more friend !", {
         icon: "success",
       });
       socket.emit("okay", { viewerId: viewerId, viewerSocket: viewerSocket });

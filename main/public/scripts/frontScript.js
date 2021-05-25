@@ -420,7 +420,10 @@ async function creatRoom(name, RoomId, Id) {
             .then(
               (response) => {
                 if (response.data.value) {
-                  sessionStorage.setItem("isAdmin", 1);
+                  sessionStorage.setItem(
+                    "isAdmin",
+                    sessionStorage.getItem("RoomId")
+                  );
                   window.location.pathname = `/room/${response.data.url}`;
 
                   socket.emit("addAdmin", {
