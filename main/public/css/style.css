@@ -321,10 +321,11 @@ div img {
 /*              Chat Div            */
 
 #chat {
-  width: 20%;
-  height: 100%;
-  background-color: #343434;
-  float: right;
+    width: 20%;
+    height: 93%;
+    background-color:#343434;
+    float: right;
+    overflow: scroll;
 }
 
 .chat_header p {
@@ -334,12 +335,12 @@ div img {
   font-size: 20px;
   padding-top: 7%;
 }
-
 #chat_message {
-  position: fixed;
-  bottom: 0;
-  width: 20%;
-  height: 9%;
+    position: fixed;
+    bottom: 0;
+    width:20%;
+    height: 7%;
+    background-color: #343434;
 }
 
 #chat_message input {
@@ -498,12 +499,13 @@ video {
   padding-bottom: 90px;
 }
 
-#ChatStreaming {
-  top: 0;
-  width: 25%;
-  height: 100%;
-  float: right;
-  background-color: #343434;
+#ChatStreaming{
+    top:0;
+    width: 25%;
+    height: 93%;
+    float: right;
+    background-color: #343434;
+    overflow-y: scroll;
 }
 
 #ParticipantsStreaming {
