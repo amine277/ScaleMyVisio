@@ -208,12 +208,12 @@ socket.on("adminInviteYou", ({ socketAdmin }) => {
 //sending user Id to server
 socket.emit("userId", sessionStorage.getItem("Id"));
 
-socket.on("lethimin", ({ viewerId, viewerSocket }) => {
+socket.on("lethimin", ({ viewerId, viewerSocket, viewerName }) => {
   console.log("3afaaak dkhelni layhfdek  a si l admin", viewerId);
 
   swal({
     title: "This guy want to join your room",
-    text: viewerId,
+    text: viewerName,
     icon: "warning",
     buttons: true,
     dangerMode: false,

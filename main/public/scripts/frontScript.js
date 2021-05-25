@@ -266,6 +266,7 @@ function JoinStream(name, RoomId, Id) {
 function goVisio() {
   socket.emit("letmein", {
     viewerId: sessionStorage.getItem("Id"),
+    viewerName: sessionStorage.getItem("name"),
     roomToJoin: sessionStorage.getItem("stream_id"),
   });
 }
@@ -369,7 +370,10 @@ async function creatRoom(name, RoomId, Id) {
           .then(
             (response) => {
               if (response.data.value) {
-                sessionStorage.setItem("isAdmin", 1);
+                sessionStorage.setItem(
+                  "isAdmin",
+                  sessionStorage.getItem("RoomId")
+                );
                 window.location.pathname = `/room/${response.data.url}`;
 
                 socket.emit("addAdmin", {

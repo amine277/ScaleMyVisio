@@ -184,7 +184,7 @@ io.on("connection", (socket) => {
     console.log("---Inviting  Viewer: ", viewerId);
   });
 
-  socket.on("letmein", ({ viewerId, roomToJoin }) => {
+  socket.on("letmein", ({ viewerId, viewerName, roomToJoin }) => {
     console.log("---viewer want to get in ", viewerId);
 
     const socketAdmin = roomList.get(roomToJoin).getAdmin();
@@ -192,6 +192,7 @@ io.on("connection", (socket) => {
     io.to(socketAdmin).emit("lethimin", {
       viewerId: viewerId,
       viewerSocket: socket.id,
+      viewerName: viewerName,
     });
   });
 

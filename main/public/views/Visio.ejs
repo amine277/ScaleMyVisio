@@ -135,11 +135,11 @@
               class="fas fa-users"
               onclick="getRoomClientList();ParticipantHide()"
             ></i>
-            <p>Participant</p>
+            <p>Participants</p>
           </div>
-          <div>
+          <div id="ViewerButton" class="hidden">
             <i
-              class="fas fa-users"
+              class="fas fa-eye"
               onclick="getRoomViewersList();ViewerHide()"
             ></i>
             <p>Viewers</p>
@@ -204,11 +204,16 @@
       // Mon code Javascript
 
       console.log("is admiin ", sessionStorage.getItem("isAdmin"));
-      if (sessionStorage.getItem("isAdmin") == 1) {
+      if (
+        sessionStorage.getItem("isAdmin") == sessionStorage.getItem("RoomId")
+      ) {
         console.log("helloo");
 
         var y = document.getElementById("passageVisioStreaming");
         y.className = "";
+
+        var x = document.getElementById("ViewerButton");
+        x.className = "";
       }
 
       var inRoom = sessionStorage.getItem("inRoom");
